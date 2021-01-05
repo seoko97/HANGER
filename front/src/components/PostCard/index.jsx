@@ -1,5 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+	AiOutlineMessage,
+	AiOutlineHeart,
+	AiOutlineEllipsis,
+} from 'react-icons/ai';
+import { VscBookmark } from 'react-icons/vsc';
+import PostImage from './PostImage';
 
 const PostCardWrapper = styled.div`
 	width: 100%;
@@ -10,6 +17,9 @@ const PostCardWrapper = styled.div`
 
 	& :not(:last-child) {
 		margin-bottom: 2em;
+	}
+	& > ul {
+		border-radius: 5px;
 	}
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
@@ -55,10 +65,10 @@ const BodyMeta = styled.div`
 `;
 
 const MetaAvatar = styled.div`
-	padding-right: 16px;
+	padding-right: 1.6rem;
 	& > span {
 		box-sizing: border-box;
-		font-size: 14px;
+		font-size: 1.3em;
 		font-variant: tabular-nums;
 		list-style: none;
 		position: relative;
@@ -102,14 +112,31 @@ const MetaDetailDescription = styled.div`
 
 const PostCardAction = styled.ul`
 	border-top: 1px solid #e8e8e8;
+	background-color: #fafafa;
+	display: flex;
+	font-size: 1.6em;
+	color: #898989;
+	& > li {
+		width: 25%;
+		text-align: center;
+		margin: 1.2rem 0;
+		&:hover,
+		&:focus {
+			color: #40a9ff;
+		}
+	}
+	& > li:not(:last-child) {
+		border-right: 1px solid #e8e8e8;
+	}
 `;
 
-const PostCard = () => {
+const PostCard = ({ testPng }) => {
 	return (
 		<PostCardWrapper>
 			<PostCardHead>
 				<button>팔로우</button>
 			</PostCardHead>
+			{testPng && <PostImage image={testPng} />}
 			<PostCardBody>
 				<BodyMeta>
 					<MetaAvatar>
@@ -120,12 +147,26 @@ const PostCard = () => {
 					<MetaDetail>
 						<MetaDetailTitle>지석호</MetaDetailTitle>
 						<MetaDetailDescription>
-							게시물 작성
+							게시물 작성 게시물 작성 게시물 작성 게시물 작성
+							게시물 작성 게시물 작성
 						</MetaDetailDescription>
 					</MetaDetail>
 				</BodyMeta>
 			</PostCardBody>
-			<PostCardAction>asdasd</PostCardAction>
+			<PostCardAction>
+				<li>
+					<VscBookmark />
+				</li>
+				<li>
+					<AiOutlineHeart />
+				</li>
+				<li>
+					<AiOutlineMessage />
+				</li>
+				<li>
+					<AiOutlineEllipsis />
+				</li>
+			</PostCardAction>
 		</PostCardWrapper>
 	);
 };
