@@ -1,11 +1,10 @@
 import { Fragment } from 'react';
 import PostCard from '../components/PostCard';
-import { AiOutlinePicture } from 'react-icons/ai';
-import styled from 'styled-components';
 import PostForm from '../components/PostForm';
 
 const Home = () => {
 	const a = [1, 2];
+
 	return (
 		<Fragment>
 			<PostForm />
