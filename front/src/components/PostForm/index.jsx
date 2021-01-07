@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import Modal from '../UI/Modal';
 import useInput from '../../hooks/useInput';
 import Button from '../UI/Button';
+import Card from '../UI/Card';
+import Avatar from '../UI/Avatar';
 
-const PostFormWrapper = styled.div`
-	width: 100%;
-	background-color: white;
-	border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-	border-radius: 5px;
-	min-width: 100%;
+const PostFormWrapper = styled(Card)`
+	width: 90%;
 	margin-bottom: 2em;
 	display: flex;
 	align-items: center;
@@ -18,34 +16,7 @@ const PostFormWrapper = styled.div`
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		width: 100%;
-		border-radius: 0;
-		border: 0;
 		margin-bottom: 1em;
-	}
-`;
-
-const Avatar = styled.div`
-	padding-right: 1.6rem;
-	& > span {
-		box-sizing: border-box;
-		font-size: 1.3em;
-		font-variant: tabular-nums;
-		list-style: none;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: #ccc;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		color: white;
-		& > span {
-			position: absolute;
-			transform: scale(1) translateX(-50%);
-			left: 50%;
-			transform-origin: 0 center;
-		}
 	}
 `;
 
@@ -116,6 +87,7 @@ const PostForm = () => {
 
 	const addPost = useCallback((e) => {
 		e.preventDefault();
+		console.log('addPost');
 	}, []);
 
 	return (
@@ -158,9 +130,7 @@ const PostForm = () => {
 								onChange={setText}
 							></textarea>
 						</TextBox>
-						<Button type="primary" htmlType="submit">
-							저장
-						</Button>
+						<Button htmlType="submit">저장</Button>
 					</Modal>
 				)}
 			</div>

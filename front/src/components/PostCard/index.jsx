@@ -1,19 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+	AiOutlineShareAlt,
 	AiOutlineMessage,
 	AiOutlineHeart,
 	AiOutlineEllipsis,
 } from 'react-icons/ai';
-import { VscBookmark } from 'react-icons/vsc';
 import PostImage from './PostImage';
+import Card from '../UI/Card';
+import Avatar from '../UI/Avatar';
 
-const PostCardWrapper = styled.div`
-	width: 100%;
-	background-color: white;
-	border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-	border-radius: 5px;
-	min-width: 100%;
+const PostCardWrapper = styled(Card)`
+	width: 90%;
 
 	& :not(:last-child) {
 		margin-bottom: 2em;
@@ -24,8 +22,6 @@ const PostCardWrapper = styled.div`
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		width: 100%;
-		border-radius: 0;
-		border: 0;
 		& :not(:last-child) {
 			margin-bottom: 1em;
 		}
@@ -38,7 +34,7 @@ const PostCardHead = styled.div`
 	align-items: center;
 	justify-content: flex-end;
 	border-bottom: 1px solid #e8e8e8;
-	padding: 1.6em 2.4em;
+	padding: 1em 2.4em;
 
 	& > button {
 		border: 1px solid #ccc;
@@ -64,31 +60,6 @@ const BodyMeta = styled.div`
 	display: flex;
 `;
 
-const MetaAvatar = styled.div`
-	padding-right: 1.6rem;
-	& > span {
-		box-sizing: border-box;
-		font-size: 1.3em;
-		font-variant: tabular-nums;
-		list-style: none;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: #ccc;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		color: white;
-		& > span {
-			position: absolute;
-			transform: scale(1) translateX(-50%);
-			left: 50%;
-			transform-origin: 0 center;
-		}
-	}
-`;
-
 const MetaDetail = styled.div`
 	overflow: hidden;
 	width: 100%;
@@ -111,8 +82,6 @@ const MetaDetailDescription = styled.div`
 `;
 
 const PostCardAction = styled.ul`
-	border-top: 1px solid #e8e8e8;
-	background-color: #fafafa;
 	display: flex;
 	font-size: 1.6em;
 	color: #898989;
@@ -125,9 +94,9 @@ const PostCardAction = styled.ul`
 			color: #40a9ff;
 		}
 	}
-	& > li:not(:last-child) {
+	/* & > li:not(:last-child) {
 		border-right: 1px solid #e8e8e8;
-	}
+	} */
 `;
 
 const PostCard = ({ testPng }) => {
@@ -139,11 +108,11 @@ const PostCard = ({ testPng }) => {
 			{testPng && <PostImage image={testPng} />}
 			<PostCardBody>
 				<BodyMeta>
-					<MetaAvatar>
+					<Avatar>
 						<span>
 							<span>지</span>
 						</span>
-					</MetaAvatar>
+					</Avatar>
 					<MetaDetail>
 						<MetaDetailTitle>지석호</MetaDetailTitle>
 						<MetaDetailDescription>
@@ -155,10 +124,10 @@ const PostCard = ({ testPng }) => {
 			</PostCardBody>
 			<PostCardAction>
 				<li>
-					<VscBookmark />
+					<AiOutlineShareAlt />
 				</li>
 				<li>
-					<AiOutlineHeart />
+					<AiOutlineHeart color="red" />
 				</li>
 				<li>
 					<AiOutlineMessage />

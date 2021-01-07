@@ -12,7 +12,7 @@ const HeaderWrapper = styled.header`
 
 	& > div {
 		margin: 0 auto;
-		width: 70%;
+		width: 60%;
 		display: flex;
 		height: 5em;
 	}
@@ -42,6 +42,7 @@ const HeaderPinWrapper = styled.div`
 
 const HearderNav = styled.nav`
 	width: 70%;
+	font-size: 1.2rem;
 	& > ul {
 		height: 100%;
 		display: flex;
@@ -66,10 +67,10 @@ const Header = () => {
 				<HearderNav>
 					<ul>
 						<li>
-							<div>로그인</div>
+							<Link href="/signin">로그인</Link>
 						</li>
 						<li>
-							<div>회원가입</div>
+							<Link href="/signup">회원가입</Link>
 						</li>
 						<li>
 							<div>사이트정보</div>

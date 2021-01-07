@@ -2,6 +2,8 @@ import Head from 'next/head';
 import React, { Fragment } from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
+import wrapper from '../store/configureStore';
+import withReduxSaga from 'next-redux-saga';
 import AppLayOut from '../components/AppLayOut';
 import theme from '../theme';
 
@@ -34,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
          font-size: 10px;
 		 background-color: #EFF2F5;
      }
+	 input[type='date'], input[type='time'] {
+    -webkit-appearance: none;
+	}
 `;
 
 const SH_BLOG = ({ Component, pageProps }) => {
@@ -52,4 +57,4 @@ const SH_BLOG = ({ Component, pageProps }) => {
 	);
 };
 
-export default SH_BLOG;
+export default wrapper.withRedux(withReduxSaga(SH_BLOG));
