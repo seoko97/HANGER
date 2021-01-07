@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ButtonStyle = styled.button`
+export const ButtonStyle = styled.button`
 	background-color: #1890ff;
 	border-color: #1890ff;
 	box-sizing: border-box;
