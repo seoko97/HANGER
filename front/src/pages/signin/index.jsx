@@ -1,8 +1,12 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import router from 'next/router';
 import styled from 'styled-components';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
+import useInput from '../../hooks/useInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { SIGN_IN_REQUEST } from '../../reducers/user';
 
 const SignInWrapper = styled(Card)`
 	width: 100%;
@@ -59,13 +63,12 @@ const GlayLine = styled.div`
 `;
 
 const SignupLink = styled.div`
-	width: 30%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background-color: #42b829;
 	color: #fff;
-	padding: 1.5rem 0;
+	padding: 1.5rem 1rem;
 	border-radius: 6px;
 	font-size: 1.6rem;
 	font-weight: 500;
@@ -83,10 +86,33 @@ const SignupLink = styled.div`
 `;
 
 const SignIn = () => {
-	const onSignIn = useCallback((e) => {
-		e.preventDefault();
-		console.log('onSignIn');
-	}, []);
+	const [userId, setUserId] = useInput('');
+	const [password, setPassword] = useInput('');
+
+	const { me } = useSelector((state) => state.user);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (me) {
+			router.push('/');
+		}
+	}, [me]);
+
+	const onSignIn = useCallback(
+		(e) => {
+			e.preventDefault();
+
+			dispatch({
+				type: SIGN_IN_REQUEST,
+				data: {
+					userId,
+					password,
+				},
+			});
+		},
+		[userId, password],
+	);
 	return (
 		<Fragment>
 			<SignInWrapper>
@@ -94,10 +120,21 @@ const SignIn = () => {
 					<h1>로그인</h1>
 					<div></div>
 					<InputWrapper>
-						<input placeholder="아이디" name="id" />
+						<input
+							placeholder="아이디"
+							name="id"
+							value={userId}
+							onChange={setUserId}
+						/>
 					</InputWrapper>
 					<InputWrapper>
-						<input placeholder="비밀번호" name="password" />
+						<input
+							placeholder="비밀번호"
+							name="password"
+							value={password}
+							onChange={setPassword}
+							type="password"
+						/>
 					</InputWrapper>
 					<Button htmlType="submit">로그인</Button>
 					<GlayLine />
