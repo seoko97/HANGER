@@ -20,6 +20,8 @@ const Section = styled.section`
 	flex-grow: 1;
 	justify-content: center;
 	margin: 1em auto;
+	margin-top: 80px;
+
 	flex: 1;
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
