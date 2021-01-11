@@ -61,7 +61,6 @@ const BodyMeta = styled.div`
 `;
 
 const MetaDetail = styled.div`
-	overflow: hidden;
 	width: 100%;
 	& > div:not(:last-child) {
 		margin-bottom: 8px;
@@ -108,11 +107,9 @@ const PostCard = ({ testPng }) => {
 			{testPng && <PostImage image={testPng} />}
 			<PostCardBody>
 				<BodyMeta>
-					<Avatar>
-						<span>
-							<span>지</span>
-						</span>
-					</Avatar>
+					<div>
+						<Avatar>지</Avatar>
+					</div>
 					<MetaDetail>
 						<MetaDetailTitle>지석호</MetaDetailTitle>
 						<MetaDetailDescription>
