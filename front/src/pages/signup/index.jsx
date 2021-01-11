@@ -111,7 +111,7 @@ const SignUp = () => {
 	const [lastName, setLastName] = useInput('');
 	const [userId, setUserId] = useInput('');
 	const [nickname, setNickname] = useInput('');
-	const [birth, setBirth] = useInput('');
+	const [birth, setBirth] = useInput('0000-00-00');
 	const [gender, setGender] = useInput('');
 
 	const [password, setPassword] = useState('');
@@ -262,6 +262,7 @@ const SignUp = () => {
 							<input
 								type="date"
 								name="date"
+								value={birth}
 								onChange={setBirth}
 								required
 							/>
