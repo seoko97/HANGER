@@ -5,6 +5,7 @@ import useInput from '../../hooks/useInput';
 import Button from '../UI/Button';
 import Card from '../UI/Card';
 import Avatar from '../UI/Avatar';
+import { useSelector } from 'react-redux';
 
 const PostFormWrapper = styled(Card)`
 	width: 90%;
@@ -25,6 +26,7 @@ const PostFormInner = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
 	& > div:last-child {
 		width: 100%;
 		background-color: #f0f2f5;
@@ -37,6 +39,11 @@ const PostFormInner = styled.div`
 		&:hover {
 			background-color: #e4e6e9;
 		}
+
+		@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+			width: 100%;
+			font-size: 1.3em;
+		}
 	}
 `;
 
@@ -44,7 +51,7 @@ const AvataWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	margin: 1rem 0;
-	font-weight: bold;
+	font-weight: 600;
 
 	& > span {
 		font-size: 2rem;
@@ -80,6 +87,7 @@ const TextBox = styled.div`
 const PostForm = () => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [text, setText] = useInput('');
+	const { me } = useSelector((state) => state.user);
 
 	const openModal = useCallback(() => {
 		setModalVisible(true);
@@ -93,13 +101,15 @@ const PostForm = () => {
 	return (
 		<PostFormWrapper>
 			<PostFormInner>
-				<Avatar>
-					<span>
-						<span>지</span>
-					</span>
-				</Avatar>
+				<div>
+					<Avatar>
+						<span>
+							<span>지</span>
+						</span>
+					</Avatar>
+				</div>
 				<div onClick={openModal}>
-					지석호님, 무슨 생각을 하고 계신가요?
+					{me.nickname}님, 무슨 생각을 하고 계신가요?
 				</div>
 			</PostFormInner>
 
@@ -114,18 +124,12 @@ const PostForm = () => {
 						submit={addPost}
 					>
 						<AvataWrapper>
-							<Avatar>
-								<span>
-									<span>지</span>
-								</span>
-							</Avatar>
-							<span>지석호</span>
+							<Avatar>{me.firstName}</Avatar>
+							<span>{me.nickname}</span>
 						</AvataWrapper>
 						<TextBox>
 							<textarea
-								placeholder={
-									'지석호님, 무슨 생각을 하고 계신가요?'
-								}
+								placeholder={`${me.nickname}님, 무슨 생각을 하고 계신가요?`}
 								value={text}
 								onChange={setText}
 							></textarea>
