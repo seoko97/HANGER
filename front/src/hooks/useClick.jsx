@@ -1,0 +1,14 @@
+import { useState, useCallback } from 'react';
+
+const useInput = (initValue = null) => {
+	const [value, setter] = useState(initValue);
+	const handler = useCallback(
+		(e) => {
+			setter(!value);
+		},
+		[value],
+	);
+	return [value, handler, setter];
+};
+
+export default useInput;
