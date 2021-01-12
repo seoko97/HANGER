@@ -14,10 +14,10 @@ const PostImageWrapper = styled.div`
 	}
 `;
 
-const PostImage = ({ image }) => {
+const PostImage = ({ images }) => {
 	return (
 		<PostImageWrapper>
-			<img src={image} />
+			<img src={images.src} />
 		</PostImageWrapper>
 	);
 };
