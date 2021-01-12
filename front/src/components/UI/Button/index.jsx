@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ButtonStyle = styled.button`
 	background-color: #1890ff;
@@ -24,8 +24,16 @@ export const ButtonStyle = styled.button`
 	}
 `;
 
-const Button = ({ children }) => {
-	return <ButtonStyle>{children}</ButtonStyle>;
+const Button = ({ children, defaultStyle }) => {
+	return (
+		<>
+			{defaultStyle ? (
+				<button>{children}</button>
+			) : (
+				<ButtonStyle>{children}</ButtonStyle>
+			)}
+		</>
+	);
 };
 
 export default Button;
