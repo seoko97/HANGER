@@ -15,26 +15,17 @@ export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
 export const initialState = {
 	me: null,
 
-	signUpLoading: false, // 회원가입 시도중
+	signUpLoading: false, // 회원가입
 	signUpDone: false,
 	signUpError: null,
 
-	signInLoading: false, // 회원가입 시도중
+	signInLoading: false, // 로그인
 	signInDone: false,
 	signInError: null,
 
-	signOutLoading: false, // 회원가입 시도중
+	signOutLoading: false, // 로그아웃
 	signOutDone: false,
 	signOutError: null,
-};
-
-export const userData = {
-	id: 1,
-	firstName: '지',
-	lastName: '석호',
-	userId: 'wltjrgh',
-	password: '1007',
-	birthDate: 0,
 };
 
 const reducer = (state = initialState, action) =>
@@ -62,7 +53,6 @@ const reducer = (state = initialState, action) =>
 				draft.signInDone = false;
 				break;
 			case SIGN_IN_SUCCESS:
-				console.log(action.data);
 				draft.me = action.data;
 				draft.signInLoading = false;
 				draft.signInDone = true;
