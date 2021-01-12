@@ -12,11 +12,13 @@ const GlobalStyle = createGlobalStyle`
 	a,
 	ul,
 	li,
-	button{
+	button,
+	form{
 		 border: 0;
          text-decoration:none;
          color:inherit;
 		 outline:none;
+		resize: none;
 		 list-style:none;
 		 text-transform: none;
      }
@@ -35,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
          font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
          font-size: 10px;
 		 background-color: #EFF2F5;
+
      }
 	 input[type='date'], input[type='time'] {
     -webkit-appearance: none;
