@@ -28,14 +28,15 @@ const AvatarWrapper = styled.div`
 					cursor: pointer;
 			  `
 			: css`
-					border: 1px solid #000;
+					border: 2px solid #e4e6eb;
 			  `}
 
 	& > span {
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
-		border: 1px solid #fff;
+		border: ${({ borderGradient }) =>
+			borderGradient ? '' : '1px solid #fff'};
 		font-size: 1.3em;
 		font-variant: tabular-nums;
 		list-style: none;
