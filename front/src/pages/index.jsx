@@ -1,20 +1,24 @@
-import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
+import { LOAD_POSTS_REQUEST } from '../reducers/post';
 
 const Home = () => {
-	const a = [1, 2];
+	const dispatch = useDispatch();
 	const { me } = useSelector((state) => state.user);
+	const { mainPosts } = useSelector((state) => state.post);
+
+	useEffect(() => {
+		dispatch({ type: LOAD_POSTS_REQUEST });
+	}, []);
 
 	return (
 		<Fragment>
 			{me && <PostForm />}
-			<PostCard key="asdfasdfasdf" testPng="./testPng.png" />
-			{a.map((x, y) => (
-				<PostCard key={y} />
+			{mainPosts.map((c) => (
+				<PostCard key={c.id} post={c} />
 			))}
-			<PostCard key="asdfasdfsasasddf" testPng="./text2img.jpeg" />
 		</Fragment>
 	);
 };
