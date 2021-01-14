@@ -70,6 +70,9 @@ export const MetaDetailDescription = styled.div`
 	box-sizing: border-box;
 	font-size: 1.4rem;
 	line-height: 1.3em;
+	& > a {
+		color: #40a9ff;
+	}
 `;
 
 export const PostCardAction = styled.ul`
