@@ -25,6 +25,7 @@ import {
 	PostCardHead,
 	PostCardWrapper,
 } from './style';
+import HashTag from '../HashTag';
 
 const PostCard = ({ post }) => {
 	const dispatch = useDispatch();
@@ -47,7 +48,6 @@ const PostCard = ({ post }) => {
 		},
 		[me && me.id, comment],
 	);
-	console.log(post);
 
 	return (
 		<PostCardWrapper>
@@ -63,7 +63,7 @@ const PostCard = ({ post }) => {
 					<MetaDetail>
 						<MetaDetailTitle>{post.User.nickname}</MetaDetailTitle>
 						<MetaDetailDescription>
-							{post.content}
+							<HashTag content={post.content} />
 						</MetaDetailDescription>
 					</MetaDetail>
 				</BodyMeta>
