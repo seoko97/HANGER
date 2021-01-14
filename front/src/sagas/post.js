@@ -1,33 +1,35 @@
 import axios from 'axios';
-import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, delay, fork, put, takeLatest, throttle } from 'redux-saga/effects';
 import {
 	ADD_COMMENT_FAILURE,
 	ADD_COMMENT_REQUEST,
 	ADD_COMMENT_SUCCESS,
-	LOAD_POSTS_FAILURE,
-	LOAD_POSTS_REQUEST,
-	LOAD_POSTS_SUCCESS,
+	ADD_POST_FAILURE,
+	ADD_POST_REQUEST,
+	ADD_POST_SUCCESS,
+	LOAD_MAIN_POSTS_FAILURE,
+	LOAD_MAIN_POSTS_REQUEST,
+	LOAD_MAIN_POSTS_SUCCESS,
 } from '../reducers/post';
-import { dummyPost } from '../dummy';
 
-function loadPostsAPI(data) {
-	return axios.post('/user/signout', data);
+function loadPostsAPI(lastId) {
+	return axios.get(`/posts?lastId=${lastId || 0}`);
 }
 
 function* loadPosts(action) {
 	try {
-		// yield call(signUpAPI);
+		const result = yield call(loadPostsAPI, action.lastId);
 		yield delay(1000);
 
 		yield put({
-			type: LOAD_POSTS_SUCCESS,
-			data: dummyPost(2),
+			type: LOAD_MAIN_POSTS_SUCCESS,
+			data: result.data,
 		});
 	} catch (err) {
 		console.error(err);
 		yield put({
-			type: LOAD_POSTS_FAILURE,
-			error: err.response.data,
+			type: LOAD_MAIN_POSTS_FAILURE,
+			error: err.response,
 		});
 	}
 }
@@ -53,14 +55,40 @@ function* addComment(action) {
 		});
 	}
 }
+
+function addPostAPI(data) {
+	return axios.post('/post', data);
+}
+
+function* addPost(action) {
+	try {
+		const result = yield call(addPostAPI, action.data);
+		yield delay(1000);
+
+		yield put({
+			type: ADD_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: ADD_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+function* watchAddPost() {
+	yield takeLatest(ADD_POST_REQUEST, addPost);
+}
+
 function* watchAddComment() {
 	yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
 function* watchLoadPosts() {
-	yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
+	yield throttle(3000, LOAD_MAIN_POSTS_REQUEST, loadPosts);
 }
 
 export default function* postSaga() {
-	yield all([fork(watchLoadPosts), fork(watchAddComment)]);
+	yield all([fork(watchLoadPosts), fork(watchAddComment), fork(watchAddPost)]);
 }

@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import {
+	LOAD_MY_INFO_FAILURE,
+	LOAD_MY_INFO_REQUEST,
+	LOAD_MY_INFO_SUCCESS,
 	SIGN_IN_FAILURE,
 	SIGN_IN_REQUEST,
 	SIGN_IN_SUCCESS,
@@ -11,7 +14,6 @@ import {
 	SIGN_UP_REQUEST,
 	SIGN_UP_SUCCESS,
 } from '../reducers/user';
-import { dummyUser1 } from '../dummy';
 
 function signUpAPI(data) {
 	return axios.post('/user', data);
@@ -19,8 +21,7 @@ function signUpAPI(data) {
 
 function* signUp(action) {
 	try {
-		// const result = yield call(signUpAPI);
-		yield delay(1000);
+		const result = yield call(signUpAPI, action.data);
 
 		yield put({
 			type: SIGN_UP_SUCCESS,
@@ -35,18 +36,17 @@ function* signUp(action) {
 }
 
 function signInAPI(data) {
-	return axios.post('/user', data);
+	return axios.post('/user/signin', data);
 }
 
 function* signIn(action) {
 	try {
-		// const result = yield call(signUpAPI);
-		yield delay(1000);
+		const result = yield call(signInAPI, action.data);
 
 		yield put({
 			type: SIGN_IN_SUCCESS,
 			// 더미유저
-			data: dummyUser1,
+			data: result.data,
 		});
 	} catch (err) {
 		console.error(err);
@@ -58,13 +58,12 @@ function* signIn(action) {
 }
 
 function signOutAPI(data) {
-	return axios.post('/user/signout', data);
+	return axios.post('/user/signout');
 }
 
 function* signOut(action) {
 	try {
-		// yield call(signUpAPI);
-		yield delay(1000);
+		yield call(signOutAPI);
 
 		yield put({
 			type: SIGN_OUT_SUCCESS,
@@ -77,6 +76,33 @@ function* signOut(action) {
 		});
 	}
 }
+
+function loadMyInfoAPI() {
+	return axios.get('/user');
+}
+
+function* loadMyInfo() {
+	try {
+		const result = yield call(loadMyInfoAPI);
+
+		console.log('result', result.data);
+
+		yield put({
+			type: LOAD_MY_INFO_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: LOAD_MY_INFO_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+function* watchLoadMyInfo() {
+	yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
+
 function* watchSignOut() {
 	yield takeLatest(SIGN_OUT_REQUEST, signOut);
 }
@@ -90,5 +116,5 @@ function* watchSignUp() {
 }
 
 export default function* userSaga() {
-	yield all([fork(watchSignUp), fork(watchSignIn), fork(watchSignOut)]);
+	yield all([fork(watchSignUp), fork(watchSignIn), fork(watchSignOut), fork(watchLoadMyInfo)]);
 }
