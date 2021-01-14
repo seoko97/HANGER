@@ -29,11 +29,15 @@ const SignUpFrom = () => {
 	const [visible, setVisible] = useState(false);
 	const [type, setType] = useState('password');
 
-	const { signUpDone } = useSelector((state) => state.user);
+	const { me, signUpError, signUpDone } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		signUpDone && Router.replace('/');
 	}, [signUpDone]);
+
+	useEffect(() => {
+		me && Router.replace('/');
+	}, [me]);
 
 	const dispatch = useDispatch();
 
@@ -64,9 +68,11 @@ const SignUpFrom = () => {
 				},
 			});
 
+			signUpError && alert('이미 존재하는 아이디입니다.');
+
 			console.log('onSignInEnd');
 		},
-		[gender, term, password],
+		[userId, nickname, firstName, lastName, birth, gender, term, password],
 	);
 	const onChangePassword = useCallback(
 		(e) => {
