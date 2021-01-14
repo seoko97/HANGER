@@ -1,5 +1,9 @@
 import produce from 'immer';
 
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
+
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -26,6 +30,10 @@ export const initialState = {
 	signOutLoading: false, // 로그아웃
 	signOutDone: false,
 	signOutError: null,
+
+	loadMyInfoLoading: false, // 내정보 호출
+	loadMyInfoDone: false,
+	loadMyInfoError: null,
 };
 
 const reducer = (state = initialState, action) =>
@@ -77,6 +85,22 @@ const reducer = (state = initialState, action) =>
 			case SIGN_OUT_FAILURE:
 				draft.signOutLoading = false;
 				draft.signOutError = action.error;
+				break;
+
+			// 내정보 호출
+			case LOAD_MY_INFO_REQUEST:
+				draft.loadMyInfoLoading = true;
+				draft.loadMyInfoError = null;
+				draft.loadMyInfoDone = false;
+				break;
+			case LOAD_MY_INFO_SUCCESS:
+				draft.me = action.data;
+				draft.loadMyInfoLoading = false;
+				draft.loadMyInfoDone = true;
+				break;
+			case LOAD_MY_INFO_FAILURE:
+				draft.loadMyInfoLoading = false;
+				draft.loadMyInfoError = action.error;
 				break;
 		}
 	});
