@@ -1,102 +1,53 @@
-import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useRef, useState } from 'react';
 import Modal from '../UI/Modal';
 import useInput from '../../hooks/useInput';
 import Button from '../UI/Button';
-import Card from '../UI/Card';
 import Avatar from '../UI/Avatar';
-import { useSelector } from 'react-redux';
-
-const PostFormWrapper = styled(Card)`
-	width: 90%;
-	margin-bottom: 2em;
-	display: flex;
-	align-items: center;
-	padding: 1.5em 2em;
-	justify-content: center;
-
-	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		width: 100%;
-		margin-bottom: 1em;
-	}
-`;
-
-const PostFormInner = styled.div`
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	& > div:last-child {
-		width: 100%;
-		background-color: #f0f2f5;
-		border-radius: 2rem;
-		padding: 1em;
-		font-size: 1.6rem;
-		color: #65676b;
-		cursor: pointer;
-
-		&:hover {
-			background-color: #e4e6e9;
-		}
-
-		@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-			width: 100%;
-			font-size: 1.3em;
-		}
-	}
-`;
-
-const AvataWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	margin: 1rem 0;
-	font-weight: 600;
-
-	& > span {
-		font-size: 2rem;
-	}
-`;
-
-const TextBox = styled.div`
-	width: 100%;
-	margin-bottom: 2em;
-
-	& textarea {
-		min-height: 300px;
-		border: 0;
-		width: 100%;
-		height: 100%;
-		font-size: 2rem;
-
-		::placeholder {
-			color: #cccccc;
-		}
-		:focus {
-			outline: none;
-		}
-	}
-
-	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		& textarea {
-			font-size: 1.6em;
-		}
-	}
-`;
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_POST_REQUEST } from '../../reducers/post';
+import {
+	PostFormInner,
+	PostFormWrapper,
+	ImageUpLoadWrapper,
+	AvataWrapper,
+	TextBox,
+} from './style';
 
 const PostForm = () => {
+	const dispatch = useDispatch();
 	const [modalVisible, setModalVisible] = useState(false);
 	const [text, setText] = useInput('');
 	const { me } = useSelector((state) => state.user);
+	const imageRef = useRef();
 
 	const openModal = useCallback(() => {
 		setModalVisible(true);
 	}, [modalVisible]);
 
-	const addPost = useCallback((e) => {
-		e.preventDefault();
-		console.log('addPost');
-	}, []);
+	const addPost = useCallback(
+		(e) => {
+			e.preventDefault();
+			dispatch({
+				type: ADD_POST_REQUEST,
+				data: text,
+			});
+			setModalVisible(false);
+		},
+		[text],
+	);
+
+	const onClickImageUpLoad = useCallback(() => {
+		imageRef.current.click();
+	}, [imageRef.current]);
+
+	// const onChangeImages = useCallback((e) => {
+	// 	console.log("image" , e.target.files);
+	// 	const imageFormData = new FormData();
+
+	// 	[].forEach.call(e.target.files, (f) => {
+	// 		imageFormData.append('image', f);
+	// 	})
+	// }, []);
 
 	return (
 		<PostFormWrapper>
@@ -134,6 +85,19 @@ const PostForm = () => {
 								onChange={setText}
 							></textarea>
 						</TextBox>
+						{/* <div>
+							<input
+								type="file"
+								name="image"
+								multiple
+								hidden
+								ref={imageRef}
+								onChange={}
+							/>
+							<ImageUpLoadWrapper>
+								이미지 업로드
+							</ImageUpLoadWrapper>
+						</div> */}
 						<Button htmlType="submit">저장</Button>
 					</Modal>
 				)}
