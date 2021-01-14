@@ -75,11 +75,11 @@ const Header = () => {
 														</div>
 													</div>
 
-													<div>
+													<div onClick={onlogOut}>
 														<SignOutWrapper>
 															<VscSignOut size={25} />
 														</SignOutWrapper>
-														<div onClick={onlogOut}>
+														<div>
 															<span>로그아웃</span>
 														</div>
 													</div>
