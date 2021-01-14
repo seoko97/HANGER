@@ -5,13 +5,7 @@ import Button from '../UI/Button';
 import Avatar from '../UI/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_POST_REQUEST } from '../../reducers/post';
-import {
-	PostFormInner,
-	PostFormWrapper,
-	ImageUpLoadWrapper,
-	AvataWrapper,
-	TextBox,
-} from './style';
+import { PostFormInner, PostFormWrapper, ImageUpLoadWrapper, AvataWrapper, TextBox } from './style';
 
 const PostForm = () => {
 	const dispatch = useDispatch();
@@ -29,7 +23,9 @@ const PostForm = () => {
 			e.preventDefault();
 			dispatch({
 				type: ADD_POST_REQUEST,
-				data: text,
+				data: {
+					content: text,
+				},
 			});
 			setModalVisible(false);
 		},
@@ -59,9 +55,7 @@ const PostForm = () => {
 						</span>
 					</Avatar>
 				</div>
-				<div onClick={openModal}>
-					{me.nickname}님, 무슨 생각을 하고 계신가요?
-				</div>
+				<div onClick={openModal}>{me.nickname}님, 무슨 생각을 하고 계신가요?</div>
 			</PostFormInner>
 
 			<div>
