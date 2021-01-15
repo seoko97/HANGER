@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Card from '../UI/Card';
+import Modal from '../UI/Modal';
 
 export const PostFormWrapper = styled(Card)`
 	width: 90%;
@@ -41,8 +42,25 @@ export const PostFormInner = styled.div`
 	}
 `;
 
-export const ImageUpLoadWrapper = styled.button`
+export const ImageUpLoadWrapper = styled.div`
+	cursor: pointer;
 	margin-bottom: 1rem;
+	padding: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 1.4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.6rem;
+	&:hover {
+		transition-duration: 0.5s;
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+
+	& > span {
+		margin-left: 1rem;
+	}
 `;
 
 export const AvataWrapper = styled.div`
@@ -61,7 +79,7 @@ export const TextBox = styled.div`
 	margin-bottom: 2em;
 
 	& textarea {
-		min-height: 300px;
+		min-height: 100px;
 		border: 0;
 		width: 100%;
 		height: 100%;
@@ -81,4 +99,10 @@ export const TextBox = styled.div`
 			font-size: 1.6em;
 		}
 	}
+`;
+
+export const ImageUpLoadForm = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 `;
