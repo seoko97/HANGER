@@ -45,10 +45,7 @@ const SignUpFrom = () => {
 		(e) => {
 			e.preventDefault();
 
-			console.log('onSignIn');
-
 			if (password.length < 4) {
-				console.log('ss');
 				return setPasswordError(true);
 			}
 			if (!term) {
@@ -69,8 +66,6 @@ const SignUpFrom = () => {
 			});
 
 			signUpError && alert('이미 존재하는 아이디입니다.');
-
-			console.log('onSignInEnd');
 		},
 		[userId, nickname, firstName, lastName, birth, gender, term, password],
 	);
@@ -79,8 +74,6 @@ const SignUpFrom = () => {
 			setPassword(e.target.value);
 
 			if (password.length >= 3) setPasswordError(false);
-
-			console.log(password.length, passwordError);
 		},
 		[password, passwordError],
 	);

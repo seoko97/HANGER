@@ -85,8 +85,6 @@ function* loadMyInfo() {
 	try {
 		const result = yield call(loadMyInfoAPI);
 
-		console.log('result', result.data);
-
 		yield put({
 			type: LOAD_MY_INFO_SUCCESS,
 			data: result.data,

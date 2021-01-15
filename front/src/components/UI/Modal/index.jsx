@@ -61,6 +61,7 @@ const CloseBox = styled(RiCloseCircleFill)`
 	cursor: pointer;
 
 	&:hover {
+		transition-duration: 0.2s;
 		background-color: gray;
 	}
 `;
@@ -80,15 +81,7 @@ const HerderBox = styled.div`
 	}
 `;
 
-const Modal = ({
-	children,
-	submit,
-	setModal,
-	maskClosable,
-	closable,
-	visible,
-	title,
-}) => {
+const Modal = ({ children, submit, setModal, maskClosable, closable, visible, title }) => {
 	const onMaskClick = (e) => {
 		if (e.target === e.currentTarget) {
 			onClose(e);

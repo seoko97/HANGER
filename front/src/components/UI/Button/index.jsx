@@ -26,13 +26,7 @@ export const ButtonStyle = styled.button`
 
 const Button = ({ children, defaultStyle }) => {
 	return (
-		<>
-			{defaultStyle ? (
-				<button>{children}</button>
-			) : (
-				<ButtonStyle>{children}</ButtonStyle>
-			)}
-		</>
+		<>{defaultStyle ? <button>{children}</button> : <ButtonStyle>{children}</ButtonStyle>}</>
 	);
 };
 

@@ -23,8 +23,6 @@ router.get('/', async (req, res, next) => {
 				},
 			});
 
-			console.log(fullUserWithoutPassword);
-
 			return res.status(200).json(fullUserWithoutPassword);
 		} else {
 			return res.status(400).json('로그인을 해주세요');
@@ -71,7 +69,6 @@ router.post('/signin', (req, res, next) => {
 			console.error(err);
 			return next(err);
 		}
-		console.log(user);
 
 		if (info) {
 			console.log('info에러', info);
@@ -79,8 +76,6 @@ router.post('/signin', (req, res, next) => {
 		}
 
 		return req.login(user, async (loginErr) => {
-			console.log(user);
-
 			if (loginErr) {
 				console.error(loginErr);
 				return next(loginErr);

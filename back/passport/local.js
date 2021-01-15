@@ -18,7 +18,6 @@ module.exports = () => {
 						where: { userId },
 					});
 
-					console.log(user);
 					if (!user) {
 						return done(null, false, { reason: '존재하지 않는 아이디입니다!' });
 					}

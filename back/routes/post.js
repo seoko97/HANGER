@@ -18,12 +18,16 @@ try {
 const upload = multer({
 	storage: multer.diskStorage({
 		destination(req, file, done) {
-			done(null, 'upload');
+			done(null, 'uploads');
 		},
 		filename(req, file, done) {
 			const ext = path.extname(file.originalname); // 확장자 추출
-			const basename = path.basename(file.originalname, ext); // 추출한 확장자와 파일이름을 합침
-			done(null, basename + '_', new Date().getTime() + ext);
+			console.log('확장자@@@@@@@ : ', ext);
+
+			const basename = path.basename(file.originalname, ext);
+			console.log('파일이름@@@@@@@ : ', basename);
+
+			done(null, basename + '_', new Date().getTime() + ext); // 추출한 확장자와 파일이름을 합침
 		},
 	}),
 	// 파일 사이지 지정 (20mb)
@@ -51,12 +55,14 @@ router.post('/', upload.none(), async (req, res, next) => {
 
 		if (req.body.image) {
 			if (Array.isArray(req.body.image)) {
+				console.log('이미지 여러개 입니다@@@@@@@@');
 				// 이미지를 여러 개 올리면 image: [제로초.png, 부기초.png]
 				const images = await Promise.all(
 					req.body.image.map((image) => Image.create({ src: image })),
 				);
 				await post.addImages(images);
 			} else {
+				console.log('이미지 한개 입니다@@@@@@@@');
 				// 이미지를 하나만 올리면 image: 제로초.png
 				const image = await Image.create({ src: req.body.image });
 				await post.addImages(image);
@@ -84,15 +90,15 @@ router.post('/', upload.none(), async (req, res, next) => {
 				},
 			],
 		});
-		return res.status(200).json(fullPost);
+		return res.status(201).json(fullPost);
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		next(err);
 	}
 });
 
-// router.get('/', async (req, res, next) => {
-
-// })
+router.post('/images', upload.array('image'), async (req, res, next) => {
+	return res.json(req.files.map((v) => v.filename));
+});
 
 module.exports = router;
