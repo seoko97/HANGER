@@ -54,7 +54,7 @@ const PostCard = ({ post }) => {
 			<PostCardHead>
 				<button>팔로우</button>
 			</PostCardHead>
-			{post.Images[0] && <PostImage images={post.Images[0]} />}
+			{post.Images[0] && <PostImage images={post.Images} />}
 			<PostCardBody>
 				<BodyMeta>
 					<div>

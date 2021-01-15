@@ -1,25 +1,66 @@
 import React from 'react';
 import styled from 'styled-components';
+import Slider from 'react-slick';
 
 const PostImageWrapper = styled.div`
-	display: flex;
+	display: flex !important;
 	align-items: center;
 	justify-content: center;
 	border-bottom: 1px solid #ccc;
-	background-color: rgba(214, 212, 212, 0.5);
 
 	& > img {
+		max-height: 70vh;
 		max-width: 100%;
-		max-height: 60vh;
 	}
 `;
 
+const StyledSlick = styled(Slider)`
+	.slick-slide div {
+		outline: none;
+	}
+	.slick-list,
+	.slick-track {
+		touch-action: pan-y;
+	}
+	.slick-track {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #f7f7f7;
+	}
+`;
+
+const settings = {
+	dots: true,
+	infinite: false,
+	speed: 500,
+	slidesToShow: 1,
+	slidesToScroll: 1,
+	arrows: false,
+};
+
 const PostImage = ({ images }) => {
-	return (
-		<PostImageWrapper>
-			<img src={images.src} />
-		</PostImageWrapper>
-	);
+	if (images.length == 1) {
+		return (
+			<PostImageWrapper>
+				<img
+					src={`http://localhost:3065/${images[0].src}`}
+					key={images[0].src + images[0].id}
+				/>
+			</PostImageWrapper>
+		);
+	}
+	if (images.length >= 2) {
+		return (
+			<StyledSlick {...settings}>
+				{images.map((v, i) => (
+					<PostImageWrapper key={v.src + i + v.id}>
+						<img src={`http://localhost:3065/${v.src}`} />
+					</PostImageWrapper>
+				))}
+			</StyledSlick>
+		);
+	}
 };
 
 export default PostImage;

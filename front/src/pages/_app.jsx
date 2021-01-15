@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import React, { Fragment } from 'react';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
 import wrapper from '../store/configureStore';
