@@ -74,6 +74,7 @@ export const SignUpMenu = styled.div`
 	padding: 1rem;
 	&:hover {
 		background-color: #e4e6eb;
+		transition-duration: 0.5s;
 	}
 
 	& > div {
