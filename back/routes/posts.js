@@ -37,6 +37,18 @@ router.get('/', async (req, res, next) => {
 						},
 					],
 				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Saved',
+					attributes: ['id'],
+				},
 			],
 		});
 		res.status(200).json(posts);
