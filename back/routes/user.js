@@ -9,6 +9,7 @@ const { Post } = require('../models');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
+	// 로그인한 유저 정보 불러오기
 	try {
 		console.log('내정보 요청');
 		// 만약 유저 정보가 존재 한다면
@@ -33,7 +34,7 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
 	// 회원가입 실행
 	try {
 		const exUser = await User.findOne({
@@ -47,7 +48,7 @@ router.post('/', async (req, res, next) => {
 		}
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
-		await User.create({
+		const user = await User.create({
 			userId: req.body.userId,
 			nickname: req.body.nickname,
 			password: hashedPassword,
@@ -55,7 +56,9 @@ router.post('/', async (req, res, next) => {
 			lastName: req.body.lastName,
 			gender: req.body.gender,
 			birth: req.body.birth,
+			profileImg: '',
 		});
+
 		res.status(201).send('ok');
 	} catch (error) {
 		console.error(error);
@@ -64,6 +67,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.post('/signin', (req, res, next) => {
+	// 로그인 전략
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
 			console.error(err);
@@ -101,7 +105,7 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signout', (req, res) => {
-	// /api/user/logout
+	// 로그아웃
 	req.logout();
 	req.session.destroy();
 	res.send('logout 성공');
