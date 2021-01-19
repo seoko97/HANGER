@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../UI/Modal';
 import useInput from '../../hooks/useInput';
 import Button from '../UI/Button';
 import Avatar from '../UI/Avatar';
-import { useDispatch, useSelector } from 'react-redux';
 import ImageCollectForm from './ImageCollectForm';
 import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST } from '../../reducers/post';
 import {
@@ -51,6 +52,7 @@ const PostForm = () => {
 				type: ADD_POST_REQUEST,
 				data: formData,
 			});
+			setText('');
 			setModalVisible(false);
 		},
 		[text, imagesPath],
@@ -101,11 +103,11 @@ const PostForm = () => {
 							<span>{me.nickname}</span>
 						</AvataWrapper>
 						<TextBox>
-							<textarea
+							<TextareaAutosize
 								placeholder={`${me.nickname}님, 무슨 생각을 하고 계신가요?`}
 								value={text}
 								onChange={texthandler}
-							></textarea>
+							/>
 						</TextBox>
 						{imagesPath[0] && <ImageCollectForm images={imagesPath} />}
 						<ImageUpLoadForm>
