@@ -39,3 +39,7 @@ yarn-error.log*
 /.next
 /uploads
 uploads/
+migrations/
+/migrations
+seeders/
+/seerders
