@@ -88,6 +88,12 @@ router.post('/', upload.none(), async (req, res, next) => {
 					model: User,
 					attributes: ['id', 'nickname'],
 				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					attributes: ['id'],
+				},
 			],
 		});
 		return res.status(201).json(fullPost);
@@ -99,6 +105,88 @@ router.post('/', upload.none(), async (req, res, next) => {
 
 router.post('/images', upload.array('image'), async (req, res, next) => {
 	return res.json(req.files.map((v) => v.filename));
+});
+
+router.post('/:postId/comment', async (req, res, next) => {
+	try {
+		const post = await Post.findOne({
+			where: { id: req.params.postId },
+		});
+
+		console.log(post);
+
+		if (!post) {
+			return res.status(400).send('게시물이 존재하지 않습니다.');
+		}
+
+		const comment = await Comment.create({
+			content: req.body.content,
+			PostId: parseInt(req.params.postId, 10),
+			UserId: req.user.id,
+		});
+
+		const fullComment = await Comment.findOne({
+			where: { id: comment.id },
+			include: [
+				{
+					model: User,
+					attributes: ['id', 'nickname'],
+				},
+			],
+		});
+
+		console.log('@@@@@@@@', fullComment);
+
+		return res.status(200).json(fullComment);
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+	// console.log('@@@@@@@', req.params, req.user);
+});
+
+router.delete('/:postId', async (req, res, next) => {
+	try {
+		await Post.destroy({
+			where: {
+				id: req.params.postId,
+				UserId: req.user.id,
+			},
+		});
+
+		return res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.patch('/:postId/like', async (req, res, next) => {
+	try {
+		const post = await Post.findOne({ where: { id: req.params.postId } });
+		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
+
+		await post.addLikers(req.user.id);
+
+		return res.json({ PostId: post.id, UserId: req.user.id });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.delete('/:postId/like', async (req, res, next) => {
+	try {
+		const post = await Post.findOne({ where: { id: req.params.postId } });
+		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
+
+		await post.removeLikers(req.user.id);
+
+		return res.json({ PostId: post.id, UserId: req.user.id });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
 });
 
 module.exports = router;
