@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, delay, fork, put, takeLatest, throttle } from 'redux-saga/effects';
+import { all, call, fork, put, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
 import {
 	ADD_COMMENT_FAILURE,
 	ADD_COMMENT_REQUEST,
@@ -10,6 +10,18 @@ import {
 	LOAD_MAIN_POSTS_FAILURE,
 	LOAD_MAIN_POSTS_REQUEST,
 	LOAD_MAIN_POSTS_SUCCESS,
+	UPLOAD_IMAGES_REQUEST,
+	UPLOAD_IMAGES_SUCCESS,
+	UPLOAD_IMAGES_FAILURE,
+	REMOVE_POST_SUCCESS,
+	REMOVE_POST_FAILURE,
+	REMOVE_POST_REQUEST,
+	LIKE_POST_SUCCESS,
+	LIKE_POST_FAILURE,
+	LIKE_POST_REQUEST,
+	UNLIKE_POST_SUCCESS,
+	UNLIKE_POST_FAILURE,
+	UNLIKE_POST_REQUEST,
 } from '../reducers/post';
 
 function loadPostsAPI(lastId) {
@@ -19,7 +31,6 @@ function loadPostsAPI(lastId) {
 function* loadPosts(action) {
 	try {
 		const result = yield call(loadPostsAPI, action.lastId);
-		yield delay(1000);
 
 		yield put({
 			type: LOAD_MAIN_POSTS_SUCCESS,
@@ -35,17 +46,16 @@ function* loadPosts(action) {
 }
 
 function addCommentAPI(data) {
-	return axios.post('/user/signout', data);
+	return axios.post(`/post/${data.postId}/comment`, data);
 }
 
 function* addComment(action) {
 	try {
-		// yield call(signUpAPI);
-		yield delay(1000);
+		const result = yield call(addCommentAPI, action.data);
 
 		yield put({
 			type: ADD_COMMENT_SUCCESS,
-			data: action.data,
+			data: result.data,
 		});
 	} catch (err) {
 		console.error(err);
@@ -63,7 +73,6 @@ function addPostAPI(data) {
 function* addPost(action) {
 	try {
 		const result = yield call(addPostAPI, action.data);
-		yield delay(1000);
 
 		yield put({
 			type: ADD_POST_SUCCESS,
@@ -77,6 +86,109 @@ function* addPost(action) {
 		});
 	}
 }
+
+function upLoadImagesAPI(data) {
+	return axios.post('/post/images', data);
+}
+
+function* upLoadImages(action) {
+	try {
+		const result = yield call(upLoadImagesAPI, action.data);
+
+		yield put({
+			type: UPLOAD_IMAGES_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: UPLOAD_IMAGES_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function removePostAPI(data) {
+	return axios.delete(`/post/${data}`);
+}
+
+function* removePost(action) {
+	try {
+		const result = yield call(removePostAPI, action.data);
+
+		console.log(result.data, '데이터입니다.');
+
+		yield put({
+			type: REMOVE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: REMOVE_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function likePostAPI(data) {
+	return axios.patch(`/post/${data}/like`);
+}
+
+function* likePost(action) {
+	try {
+		const result = yield call(likePostAPI, action.data);
+
+		yield put({
+			type: LIKE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: LIKE_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function unLikePostAPI(data) {
+	return axios.delete(`/post/${data}/like`);
+}
+
+function* unLikePost(action) {
+	try {
+		const result = yield call(unLikePostAPI, action.data);
+
+		yield put({
+			type: UNLIKE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: UNLIKE_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function* watchUnLikePost() {
+	yield takeLatest(UNLIKE_POST_REQUEST, unLikePost);
+}
+
+function* watchLikePost() {
+	yield takeLatest(LIKE_POST_REQUEST, likePost);
+}
+
+function* watchRemovePost() {
+	yield takeLatest(REMOVE_POST_REQUEST, removePost);
+}
+
+function* watchUpLoadImages() {
+	yield takeLatest(UPLOAD_IMAGES_REQUEST, upLoadImages);
+}
+
 function* watchAddPost() {
 	yield takeLatest(ADD_POST_REQUEST, addPost);
 }
@@ -90,5 +202,13 @@ function* watchLoadPosts() {
 }
 
 export default function* postSaga() {
-	yield all([fork(watchLoadPosts), fork(watchAddComment), fork(watchAddPost)]);
+	yield all([
+		fork(watchLoadPosts),
+		fork(watchAddComment),
+		fork(watchAddPost),
+		fork(watchUpLoadImages),
+		fork(watchRemovePost),
+		fork(watchLikePost),
+		fork(watchUnLikePost),
+	]);
 }
