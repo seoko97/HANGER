@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import React from 'react';
+import { FaUserAlt } from 'react-icons/fa';
 
 const AvatarWrapper = styled.div`
 	display: flex;
@@ -35,41 +36,46 @@ const AvatarWrapper = styled.div`
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
-		border: ${({ borderGradient }) =>
-			borderGradient ? '' : '1px solid #fff'};
+		border: ${({ borderGradient }) => (borderGradient ? '' : '1px solid #fff')};
 		font-size: 1.3em;
 		font-variant: tabular-nums;
 		list-style: none;
 		position: relative;
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: center;
 		background-color: #ccc;
-
+		overflow: hidden;
 		border-radius: 50%;
 		color: white;
 		& > span {
-			position: absolute;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
 			transform: scale(1) translateX(-50%);
+
+			position: absolute;
 			left: 50%;
 			transform-origin: 0 center;
 		}
 	}
 `;
 
-const Avatar = ({ children, size, borderGradient }) => {
+const AvatarForm = ({ size, borderGradient, profileImg }) => {
 	return (
 		<>
-			<AvatarWrapper
-				size={size}
-				borderGradient={borderGradient}
-				className="avatar"
-			>
+			<AvatarWrapper size={size} borderGradient={borderGradient} className="avatar">
 				<span>
-					<span>{children}</span>
+					<span>
+						{profileImg ? (
+							<img src={profileImg} />
+						) : (
+							<FaUserAlt size={size ? size - 12 : 22} />
+						)}
+					</span>
 				</span>
 			</AvatarWrapper>
 		</>
 	);
 };
-export default Avatar;
+export default AvatarForm;
