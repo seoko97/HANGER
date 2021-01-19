@@ -31,5 +31,7 @@ module.exports = class Post extends (
 
 		// n:m관계
 		db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
+		db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+		db.Post.belongsToMany(db.User, { through: 'Save', as: 'Savers' });
 	}
 };
