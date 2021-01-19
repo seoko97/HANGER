@@ -37,6 +37,10 @@ module.exports = class User extends (
 					type: DataTypes.DATE,
 					allowNull: false, // 필수
 				},
+				profileImg: {
+					type: DataTypes.STRING(200),
+					allowNull: true,
+				},
 			},
 			{
 				modelName: 'User',
@@ -50,5 +54,18 @@ module.exports = class User extends (
 	static associate(db) {
 		db.User.hasMany(db.Post);
 		db.User.hasMany(db.Comment);
+
+		db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+		db.User.belongsToMany(db.Post, { through: 'Save', as: 'Saved' });
+		db.User.belongsToMany(db.User, {
+			through: 'Follow',
+			as: 'Followers',
+			foreignKey: 'FollowingId',
+		});
+		db.User.belongsToMany(db.User, {
+			through: 'Follow',
+			as: 'Followings',
+			foreignKey: 'FollowerId',
+		});
 	}
 };
