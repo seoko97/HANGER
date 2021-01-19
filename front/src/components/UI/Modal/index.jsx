@@ -82,11 +82,11 @@ const HerderBox = styled.div`
 `;
 
 const Modal = ({ children, submit, setModal, maskClosable, closable, visible, title }) => {
-	const onMaskClick = (e) => {
+	const onMaskClick = useCallback((e) => {
 		if (e.target === e.currentTarget) {
 			onClose(e);
 		}
-	};
+	}, []);
 
 	const onClose = useCallback(() => {
 		setModal(false);

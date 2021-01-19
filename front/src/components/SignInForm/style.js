@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import Card from '../UI/Card';
 
+export const SignInFormWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: -20px;
+
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		margin-top: 0;
+	}
+`;
+
 export const SignInWrapper = styled(Card)`
 	width: 100%;
 	max-width: 400px;

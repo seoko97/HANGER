@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import Card from '../UI/Card';
 
 export const PostCardWrapper = styled(Card)`
-	width: 90%;
+	width: 100%;
+	min-width: 350px;
 
 	& :not(:last-child) {
 		margin-bottom: 2em;
@@ -11,8 +12,13 @@ export const PostCardWrapper = styled(Card)`
 		border-radius: 5px;
 	}
 
+	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+		min-width: 0;
+	}
+
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		width: 100%;
+		min-width: 0;
+
 		& :not(:last-child) {
 			margin-bottom: 1em;
 		}
@@ -25,7 +31,7 @@ export const PostCardHead = styled.div`
 	align-items: center;
 	justify-content: flex-end;
 	border-bottom: 1px solid #e8e8e8;
-	padding: 1em 2.4em;
+	padding: 1em 2em;
 
 	& > button {
 		border: 1px solid #ccc;
@@ -80,13 +86,44 @@ export const PostCardAction = styled.ul`
 	font-size: 1.6em;
 	color: #898989;
 	& > li {
+		position: relative;
 		width: 25%;
-		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		margin: 1.2rem 0;
 		&:hover,
 		&:focus {
 			color: #40a9ff;
 		}
+	}
+`;
+
+export const Balloon = styled.div`
+	cursor: pointer;
+	position: absolute;
+	color: #000;
+	font-size: 1.2rem;
+	padding: 1rem;
+	top: -40px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 0 8px 5px rgba(0, 0, 0, 0.1);
+	&:hover {
+		color: #40a9ff;
+	}
+
+	&:after {
+		border-top: 8px solid #fff;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-bottom: 0 solid transparent;
+		content: '';
+		position: absolute;
+		left: 12px;
+		top: 30px;
+		padding: 0;
 	}
 `;
 
@@ -109,13 +146,12 @@ export const AddCommentFormWrapper = styled.form`
 
 	& > textarea {
 		font-size: 1.4rem;
-		height: auto;
 		border: none;
 		resize: none;
 		overflow: visible;
-		height: 18px;
 		outline: none;
 		flex-grow: 1;
+		max-height: 85px;
 	}
 	& > button {
 		font-size: 1.4rem;
@@ -143,20 +179,29 @@ export const CommentsList = styled.div`
 		font-weight: 300;
 	}
 
+	& > div:nth-child(2) {
+		margin-top: 1rem;
+	}
+	& > div:not(:first-child) {
+		margin-bottom: 0.4rem;
+	}
+
 	& > div {
 		display: block;
-		margin-bottom: 1.2rem;
 
 		& > span {
 			display: inline;
 			position: relative;
 			font-weight: 300;
 			line-height: 1.3em;
+			& > a {
+				color: #40a9ff;
+			}
 		}
 
 		& > span:first-child {
 			margin-right: 0.6rem;
-			font-weight: 600;
+			font-weight: 500;
 			cursor: pointer;
 		}
 	}

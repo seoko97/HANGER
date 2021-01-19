@@ -20,12 +20,12 @@ export const HeaderWrapper = styled.header`
 `;
 export const HeaderInner = styled.div`
 	margin: 0 auto;
-	width: 60%;
+	width: 65%;
 	display: flex;
 	height: 5em;
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
-		width: 80%;
+		width: 90%;
 	}
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {

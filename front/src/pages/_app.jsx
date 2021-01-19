@@ -31,7 +31,8 @@ const GlobalStyle = createGlobalStyle`
 		 padding:0;
      }
      html,
-	 body{
+	 body,
+	 #__next{
 		 margin:0;
 		 padding:0;
 		 width:100%;

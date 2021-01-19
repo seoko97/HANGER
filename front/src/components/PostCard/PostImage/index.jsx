@@ -7,10 +7,17 @@ const PostImageWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	border-bottom: 1px solid #ccc;
+	overflow: hidden;
 
 	& > img {
-		max-height: 70vh;
+		max-height: 637px;
 		max-width: 100%;
+		@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+			max-height: 40vh;
+		}
+		@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+			max-height: 60vh;
+		}
 	}
 `;
 

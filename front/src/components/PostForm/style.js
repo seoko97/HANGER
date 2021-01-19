@@ -1,18 +1,23 @@
 import styled from 'styled-components';
 import Card from '../UI/Card';
-import Modal from '../UI/Modal';
 
 export const PostFormWrapper = styled(Card)`
-	width: 90%;
+	width: 100%;
 	margin-bottom: 2em;
+	min-width: 350px;
+
 	display: flex;
 	align-items: center;
 	padding: 1.5em 2em;
 	justify-content: center;
 
+	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+		min-width: 0;
+	}
+
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		width: 100%;
 		margin-bottom: 1em;
+		min-width: 0;
 	}
 `;
 
@@ -79,12 +84,13 @@ export const TextBox = styled.div`
 	margin-bottom: 2em;
 
 	& textarea {
-		min-height: 100px;
+		min-height: 150px;
 		border: 0;
 		width: 100%;
 		height: 100%;
 		font-size: 2rem;
 		resize: none;
+		max-height: 200px;
 
 		::placeholder {
 			color: #cccccc;
@@ -97,6 +103,7 @@ export const TextBox = styled.div`
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		& textarea {
 			font-size: 1.6em;
+			max-height: 180px;
 		}
 	}
 `;

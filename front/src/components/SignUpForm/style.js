@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import Card from '../UI/Card';
 
+export const SignUpFormWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: -20px;
+
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		margin-top: 0;
+	}
+`;
+
 export const SignUpWrapper = styled(Card)`
 	width: 100%;
 	max-width: 600px;
@@ -45,7 +57,7 @@ export const SignUpMainContent = styled.form`
 			font-size: 1.4rem;
 		}
 		& > input {
-			margin-bottom: 1.2rem;
+			margin-bottom: 3rem;
 		}
 	}
 	& > button {
@@ -88,7 +100,7 @@ export const CheckBox = styled.div`
 	width: 100%;
 	font-size: 1.4rem;
 	border-radius: 5px;
-	margin-bottom: 1.2rem;
+	margin-bottom: 3rem;
 	border: 1px solid #ccd0d5;
 	&:nth-child(2) {
 		margin-left: 10px;

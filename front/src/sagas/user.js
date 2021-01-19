@@ -16,7 +16,7 @@ import {
 } from '../reducers/user';
 
 function signUpAPI(data) {
-	return axios.post('/user', data);
+	return axios.post('/user/signup', data);
 }
 
 function* signUp(action) {
@@ -45,7 +45,6 @@ function* signIn(action) {
 
 		yield put({
 			type: SIGN_IN_SUCCESS,
-			// 더미유저
 			data: result.data,
 		});
 	} catch (err) {
