@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { VscBookmark, VscSignOut } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const me = useSelector((state) => state.user.me);
 
-	const [banner, bannerHandler] = useInput(false);
+	const [banner, bannerHandler, setBanner] = useInput(false);
 
 	const onlogOut = useCallback(() => {
 		dispatch({
@@ -34,24 +34,22 @@ const Header = () => {
 			<HeaderWrapper>
 				<HeaderInner>
 					<HeaderPinWrapper>
-						<Link href="/">
-							<a>지석호(로고)</a>
-						</Link>
+						<Link href="/">지석호(로고)</Link>
 					</HeaderPinWrapper>
 					<HearderNav>
 						{me ? (
-							<Fragment>
+							<>
 								<SignUpMenu onClick={bannerHandler}>
-									<Avatar>{me.firstName}</Avatar>
+									<Avatar />
+
 									<div>{me.nickname}</div>
 									{banner && (
 										<MenuWrapper>
 											<ItemList>
 												<div>
 													<div>
-														<Avatar size={50} borderGradient={true}>
-															{me.firstName}
-														</Avatar>
+														<Avatar size={50} borderGradient={true} />
+
 														<NameWrapper>
 															<div>
 																<span>{me.nickname}</span>
@@ -88,7 +86,7 @@ const Header = () => {
 										</MenuWrapper>
 									)}
 								</SignUpMenu>
-							</Fragment>
+							</>
 						) : (
 							<ul>
 								<li>
