@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
-import { Layout, MainContents, Section } from './styled';
+import { Layout, MainContents, Section } from './style';
 
 const AppLayOut = ({ children }) => {
 	return (
