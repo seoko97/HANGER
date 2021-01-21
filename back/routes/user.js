@@ -48,7 +48,7 @@ router.post('/signup', async (req, res, next) => {
 		}
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
-		const user = await User.create({
+		await User.create({
 			userId: req.body.userId,
 			nickname: req.body.nickname,
 			password: hashedPassword,
