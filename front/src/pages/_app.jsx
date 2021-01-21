@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { Fragment } from 'react';
+import React from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
 
 const SH_BLOG = ({ Component, pageProps }) => {
 	return (
-		<Fragment>
+		<>
 			<GlobalStyle />
 			<ThemeProvider theme={theme}>
 				<Head>
@@ -59,7 +59,7 @@ const SH_BLOG = ({ Component, pageProps }) => {
 					<Component {...pageProps} />
 				</AppLayOut>
 			</ThemeProvider>
-		</Fragment>
+		</>
 	);
 };
 
