@@ -22,6 +22,12 @@ import {
 	UNLIKE_POST_SUCCESS,
 	UNLIKE_POST_FAILURE,
 	UNLIKE_POST_REQUEST,
+	SAVE_POST_REQUEST,
+	SAVE_POST_SUCCESS,
+	SAVE_POST_FAILURE,
+	UNSAVE_POST_REQUEST,
+	UNSAVE_POST_SUCCESS,
+	UNSAVE_POST_FAILURE,
 } from '../reducers/post';
 
 function loadPostsAPI(lastId) {
@@ -173,6 +179,56 @@ function* unLikePost(action) {
 	}
 }
 
+function savePostAPI(data) {
+	return axios.patch(`/post/${data}/save`);
+}
+
+function* savePost(action) {
+	try {
+		const result = yield call(savePostAPI, action.data);
+
+		yield put({
+			type: SAVE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: SAVE_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function unSavePostAPI(data) {
+	return axios.delete(`/post/${data}/save`);
+}
+
+function* unSavePost(action) {
+	try {
+		const result = yield call(unSavePostAPI, action.data);
+
+		yield put({
+			type: UNSAVE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: UNSAVE_POST_FAILURE,
+			error: err.response.data,
+		});
+	}
+}
+
+function* watchUnSavePost() {
+	yield takeLatest(UNSAVE_POST_REQUEST, unSavePost);
+}
+
+function* watchSavePost() {
+	yield takeLatest(SAVE_POST_REQUEST, savePost);
+}
+
 function* watchUnLikePost() {
 	yield takeLatest(UNLIKE_POST_REQUEST, unLikePost);
 }
@@ -210,5 +266,7 @@ export default function* postSaga() {
 		fork(watchRemovePost),
 		fork(watchLikePost),
 		fork(watchUnLikePost),
+		fork(watchSavePost),
+		fork(watchUnSavePost),
 	]);
 }

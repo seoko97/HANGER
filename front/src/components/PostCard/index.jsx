@@ -42,7 +42,6 @@ const PostCard = ({ post }) => {
 	const { me } = useSelector((state) => state.user);
 	const [commentForm, setCommentForm] = useClick(false);
 	const [onEllForm, setEllForm] = useClick(false);
-	const [save, setSave] = useState(false);
 
 	const [comment, commentHandler, setComment] = useInput('');
 
@@ -93,10 +92,10 @@ const PostCard = ({ post }) => {
 		});
 	}, [me]);
 
-	const onClickBookmark = useCallback(() => {
-		if (!me) return alert('로그인 후 사용가능합니다.');
+	const liked = post.Likers.find((v) => v.id === me?.id);
 
-		setSave(!save);
+	const onSave = useCallback(() => {
+		if (!me) return alert('로그인 후 사용가능합니다.');
 
 		return dispatch({
 			type: SAVE_POST_REQUEST,
@@ -104,8 +103,16 @@ const PostCard = ({ post }) => {
 		});
 	}, [me]);
 
-	const liked = post.Likers.find((v) => v.id === me.id);
-	// const Saved = post.Savers.find((v) => v.id === me.id);
+	const onUnSave = useCallback(() => {
+		if (!me) return alert('로그인 후 사용가능합니다.');
+
+		return dispatch({
+			type: UNSAVE_POST_REQUEST,
+			data: post.id,
+		});
+	}, [me]);
+
+	const saved = post.Savers.find((v) => v.id === me?.id);
 
 	return (
 		<PostCardWrapper>
@@ -127,11 +134,11 @@ const PostCard = ({ post }) => {
 				</BodyMeta>
 			</PostCardBody>
 			<PostCardAction>
-				<li onClick={setSave}>
-					{save ? (
-						<BsBookmarkFill cursor="pointer" color="#40a9ff" />
+				<li>
+					{saved ? (
+						<BsBookmarkFill cursor="pointer" color="#40a9ff" onClick={onUnSave} />
 					) : (
-						<BsBookmark cursor="pointer" />
+						<BsBookmark cursor="pointer" onClick={onSave} />
 					)}
 				</li>
 				<li cursor="pointer">
