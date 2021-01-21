@@ -20,7 +20,9 @@ export const HeaderWrapper = styled.header`
 `;
 export const HeaderInner = styled.div`
 	margin: 0 auto;
-	width: 65%;
+	width: 90%;
+	max-width: 935px;
+
 	display: flex;
 	height: 5em;
 

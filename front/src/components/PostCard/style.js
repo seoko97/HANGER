@@ -3,7 +3,6 @@ import Card from '../UI/Card';
 
 export const PostCardWrapper = styled(Card)`
 	width: 100%;
-	min-width: 350px;
 
 	& :not(:last-child) {
 		margin-bottom: 2em;
