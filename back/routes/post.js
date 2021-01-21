@@ -94,6 +94,12 @@ router.post('/', upload.none(), async (req, res, next) => {
 					as: 'Likers',
 					attributes: ['id'],
 				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Savers',
+					attributes: ['id'],
+				},
 			],
 		});
 		return res.status(201).json(fullPost);
@@ -181,6 +187,34 @@ router.delete('/:postId/like', async (req, res, next) => {
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
 
 		await post.removeLikers(req.user.id);
+
+		return res.json({ PostId: post.id, UserId: req.user.id });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.patch('/:postId/save', async (req, res, next) => {
+	try {
+		const post = await Post.findOne({ where: { id: req.params.postId } });
+		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
+
+		await post.addSavers(req.user.id);
+
+		return res.json({ PostId: post.id, UserId: req.user.id });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.delete('/:postId/save', async (req, res, next) => {
+	try {
+		const post = await Post.findOne({ where: { id: req.params.postId } });
+		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
+
+		await post.removeSavers(req.user.id);
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
