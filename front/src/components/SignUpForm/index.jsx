@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Router from 'next/router';
 import { SIGN_UP_REQUEST } from '../../reducers/user';
@@ -22,7 +22,7 @@ const SignUpFrom = () => {
 	const [userId, setUserId] = useInput('');
 	const [nickname, setNickname] = useInput('');
 	const [birth, setBirth] = useInput('');
-	const [gender, setGender] = useInput('');
+	const [gender, genderHandler] = useInput('');
 	const [term, setTerm] = useClick(false);
 
 	const [password, setPassword] = useState('');
@@ -40,8 +40,6 @@ const SignUpFrom = () => {
 	useEffect(() => {
 		me && Router.replace('/');
 	}, [me]);
-
-	const dispatch = useDispatch();
 
 	const onSignUp = useCallback(
 		(e) => {
@@ -192,22 +190,25 @@ const SignUpFrom = () => {
 								<CheckBox>
 									<label htmlFor="male">남성</label>
 									<input
+										id="male"
 										type="radio"
 										name="gender"
 										value="male"
+										className="gender"
 										required
-										onClick={setGender}
+										onClick={genderHandler}
 									/>
 								</CheckBox>
 
 								<CheckBox>
 									<label htmlFor="female">여성</label>
 									<input
+										id="female"
 										type="radio"
 										name="gender"
 										value="female"
 										required
-										onClick={setGender}
+										onClick={genderHandler}
 									/>
 								</CheckBox>
 							</div>
