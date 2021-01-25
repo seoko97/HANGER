@@ -1,5 +1,4 @@
 import produce from 'immer';
-import shortId from 'shortid';
 
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
@@ -8,6 +7,18 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
+
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
+
+export const LOAD_USER_LIKE_POSTS_REQUEST = 'LOAD_USER_LIKE_POSTS_REQUEST';
+export const LOAD_USER_LIKE_POSTS_SUCCESS = 'LOAD_USER_LIKE_POSTS_SUCCESS';
+export const LOAD_USER_LIKE_POSTS_FAILURE = 'LOAD_USER_LIKE_POSTS_FAILURE';
+
+export const LOAD_USER_SAVE_POSTS_REQUEST = 'LOAD_USER_SAVE_POSTS_REQUEST';
+export const LOAD_USER_SAVE_POSTS_SUCCESS = 'LOAD_USER_SAVE_POSTS_SUCCESS';
+export const LOAD_USER_SAVE_POSTS_FAILURE = 'LOAD_USER_SAVE_POSTS_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -99,6 +110,7 @@ const reducer = (state = initialState, action) =>
 				draft.addPostLoading = false;
 				draft.addPostDone = true;
 				draft.mainPosts.unshift(action.data);
+				draft.imagesPath = [];
 				break;
 			case ADD_POST_FAILURE:
 				draft.addPostLoading = false;
@@ -117,6 +129,28 @@ const reducer = (state = initialState, action) =>
 				draft.mainPosts = action.data.concat(draft.mainPosts);
 				break;
 			case LOAD_MAIN_POSTS_FAILURE:
+				draft.loadPostsLoading = false;
+				draft.loadPostsError = action.error;
+				break;
+
+			case LOAD_USER_POSTS_REQUEST:
+			case LOAD_USER_LIKE_POSTS_REQUEST:
+			case LOAD_USER_SAVE_POSTS_REQUEST:
+				draft.loadPostsLoading = true;
+				draft.loadPostsError = null;
+				draft.loadPostsDone = false;
+				draft.mainPosts = [];
+				break;
+			case LOAD_USER_POSTS_SUCCESS:
+			case LOAD_USER_LIKE_POSTS_SUCCESS:
+			case LOAD_USER_SAVE_POSTS_SUCCESS:
+				draft.loadPostsLoading = false;
+				draft.loadPostsDone = true;
+				draft.mainPosts = action.data.concat(draft.mainPosts);
+				break;
+			case LOAD_USER_POSTS_FAILURE:
+			case LOAD_USER_LIKE_POSTS_FAILURE:
+			case LOAD_USER_SAVE_POSTS_FAILURE:
 				draft.loadPostsLoading = false;
 				draft.loadPostsError = action.error;
 				break;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, fork, put, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import {
 	ADD_COMMENT_FAILURE,
 	ADD_COMMENT_REQUEST,
@@ -28,6 +28,15 @@ import {
 	UNSAVE_POST_REQUEST,
 	UNSAVE_POST_SUCCESS,
 	UNSAVE_POST_FAILURE,
+	LOAD_USER_POSTS_REQUEST,
+	LOAD_USER_POSTS_SUCCESS,
+	LOAD_USER_POSTS_FAILURE,
+	LOAD_USER_SAVE_POSTS_SUCCESS,
+	LOAD_USER_SAVE_POSTS_FAILURE,
+	LOAD_USER_SAVE_POSTS_REQUEST,
+	LOAD_USER_LIKE_POSTS_SUCCESS,
+	LOAD_USER_LIKE_POSTS_FAILURE,
+	LOAD_USER_LIKE_POSTS_REQUEST,
 } from '../reducers/post';
 
 function loadPostsAPI(lastId) {
@@ -121,8 +130,6 @@ function removePostAPI(data) {
 function* removePost(action) {
 	try {
 		const result = yield call(removePostAPI, action.data);
-
-		console.log(result.data, '데이터입니다.');
 
 		yield put({
 			type: REMOVE_POST_SUCCESS,
@@ -221,6 +228,81 @@ function* unSavePost(action) {
 	}
 }
 
+function loadUserPostsAPI(data) {
+	return axios.get(`/posts/${data}`);
+}
+
+function* loadUserPosts(action) {
+	try {
+		const result = yield call(loadUserPostsAPI, action.data.nickname);
+
+		yield put({
+			type: LOAD_USER_POSTS_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: LOAD_USER_POSTS_FAILURE,
+			error: err.response,
+		});
+	}
+}
+
+function loadUserSavePostsAPI(data) {
+	return axios.get(`/posts/${data}/saved`);
+}
+
+function* loadUserSavePosts(action) {
+	try {
+		const result = yield call(loadUserSavePostsAPI, action.data.nickname);
+
+		yield put({
+			type: LOAD_USER_SAVE_POSTS_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: LOAD_USER_SAVE_POSTS_FAILURE,
+			error: err.response,
+		});
+	}
+}
+
+function loadUserLikePostsAPI(data) {
+	return axios.get(`/posts/${data}/like`);
+}
+
+function* loadUserLikePosts(action) {
+	try {
+		const result = yield call(loadUserLikePostsAPI, action.data.nickname);
+
+		yield put({
+			type: LOAD_USER_LIKE_POSTS_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		console.error(err);
+		yield put({
+			type: LOAD_USER_LIKE_POSTS_FAILURE,
+			error: err.response,
+		});
+	}
+}
+
+function* watchLoadUserLikePosts() {
+	yield takeLatest(LOAD_USER_LIKE_POSTS_REQUEST, loadUserLikePosts);
+}
+
+function* watchLoadUserSavePosts() {
+	yield takeLatest(LOAD_USER_SAVE_POSTS_REQUEST, loadUserSavePosts);
+}
+
+function* watchLoadUserPosts() {
+	yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
+}
+
 function* watchUnSavePost() {
 	yield takeLatest(UNSAVE_POST_REQUEST, unSavePost);
 }
@@ -254,7 +336,7 @@ function* watchAddComment() {
 }
 
 function* watchLoadPosts() {
-	yield throttle(3000, LOAD_MAIN_POSTS_REQUEST, loadPosts);
+	yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
 }
 
 export default function* postSaga() {
@@ -268,5 +350,8 @@ export default function* postSaga() {
 		fork(watchUnLikePost),
 		fork(watchSavePost),
 		fork(watchUnSavePost),
+		fork(watchLoadUserPosts),
+		fork(watchLoadUserSavePosts),
+		fork(watchLoadUserLikePosts),
 	]);
 }
