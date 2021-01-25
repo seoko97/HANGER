@@ -58,4 +58,176 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+router.get('/:nickname', async (req, res, next) => {
+	// GET /posts/nickname
+	try {
+		const user = await User.findOne({
+			where: { nickname: req.params.nickname },
+			attributes: {
+				exclude: ['password'],
+			},
+		});
+
+		const posts = await Post.findAll({
+			where: {
+				UserId: user.id,
+			},
+			limit: 10,
+			order: [
+				['createdAt', 'DESC'],
+				[Comment, 'createdAt', 'DESC'],
+			],
+			include: [
+				{
+					model: User,
+					attributes: ['id', 'nickname'],
+				},
+				{
+					model: Image,
+				},
+				{
+					model: Comment,
+					include: [
+						{
+							model: User,
+							attributes: ['id', 'nickname'],
+						},
+					],
+				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Savers',
+					attributes: ['id'],
+				},
+			],
+		});
+
+		return res.status(200).json(posts);
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.get('/:nickname/saved', async (req, res, next) => {
+	try {
+		const user = await User.findOne({
+			where: { nickname: req.params.nickname },
+			attributes: {
+				exclude: ['password'],
+			},
+		});
+
+		const posts = await Post.findAll({
+			limit: 10,
+			order: [
+				['createdAt', 'DESC'],
+				[Comment, 'createdAt', 'DESC'],
+			],
+			include: [
+				{
+					model: User,
+					attributes: ['id', 'nickname'],
+				},
+				{
+					model: Image,
+				},
+				{
+					model: Comment,
+					include: [
+						{
+							model: User,
+							attributes: ['id', 'nickname'],
+						},
+					],
+				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Savers',
+					where: {
+						id: user.id,
+					},
+					attributes: ['id'],
+				},
+			],
+		});
+
+		return res.status(200).json(posts);
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.get('/:nickname/like', async (req, res, next) => {
+	try {
+		const user = await User.findOne({
+			where: { nickname: req.params.nickname },
+			attributes: {
+				exclude: ['password'],
+			},
+		});
+
+		const posts = await Post.findAll({
+			limit: 10,
+			order: [
+				['createdAt', 'DESC'],
+				[Comment, 'createdAt', 'DESC'],
+			],
+			include: [
+				{
+					model: User,
+					attributes: ['id', 'nickname'],
+				},
+				{
+					model: Image,
+				},
+				{
+					model: Comment,
+					include: [
+						{
+							model: User,
+							attributes: ['id', 'nickname'],
+						},
+					],
+				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					where: {
+						id: user.id,
+					},
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Savers',
+					attributes: ['id'],
+				},
+			],
+		});
+
+		return res.status(200).json(posts);
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
 module.exports = router;
