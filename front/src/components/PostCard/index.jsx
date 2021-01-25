@@ -36,6 +36,7 @@ import {
 	Balloon,
 } from './style';
 import HashTag from '../HashTag';
+import Link from 'next/link';
 
 const PostCard = ({ post }) => {
 	const dispatch = useDispatch();
@@ -62,7 +63,6 @@ const PostCard = ({ post }) => {
 	);
 
 	const onRemovePost = useCallback(() => {
-		console.log(me?.id, post.User.id);
 		if (!me) {
 			return alert('로그인이 필요합니다.');
 		}
@@ -123,7 +123,11 @@ const PostCard = ({ post }) => {
 			<PostCardBody>
 				<BodyMeta>
 					<div>
-						<Avatar>{post.User.nickname[0]}</Avatar>
+						<Link href={`/${post.User.nickname}`}>
+							<a>
+								<Avatar>{post.User.nickname}</Avatar>
+							</a>
+						</Link>
 					</div>
 					<MetaDetail>
 						<MetaDetailTitle>{post.User.nickname}</MetaDetailTitle>
