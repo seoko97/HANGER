@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^10.0.5",
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "faker": "^5.1.0",
