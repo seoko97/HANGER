@@ -41,6 +41,10 @@ module.exports = class User extends (
 					type: DataTypes.STRING(200),
 					allowNull: true,
 				},
+				introduction: {
+					type: DataTypes.TEXT,
+					allowNull: true,
+				},
 			},
 			{
 				modelName: 'User',
