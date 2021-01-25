@@ -119,8 +119,6 @@ router.post('/:postId/comment', async (req, res, next) => {
 			where: { id: req.params.postId },
 		});
 
-		console.log(post);
-
 		if (!post) {
 			return res.status(400).send('게시물이 존재하지 않습니다.');
 		}
@@ -141,14 +139,11 @@ router.post('/:postId/comment', async (req, res, next) => {
 			],
 		});
 
-		console.log('@@@@@@@@', fullComment);
-
 		return res.status(200).json(fullComment);
 	} catch (error) {
 		console.error(error);
 		next(error);
 	}
-	// console.log('@@@@@@@', req.params, req.user);
 });
 
 router.delete('/:postId', async (req, res, next) => {
