@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { VscBookmark, VscSignOut } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
+import router from 'next/router';
 import Avatar from '../../UI/Avatar';
 import useInput from '../../../hooks/useClick';
 import { SIGN_OUT_REQUEST } from '../../../reducers/user';
@@ -27,6 +28,7 @@ const Header = () => {
 		dispatch({
 			type: SIGN_OUT_REQUEST,
 		});
+		router.push('/');
 	}, []);
 
 	return (
