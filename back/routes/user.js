@@ -22,6 +22,13 @@ router.get('/', async (req, res, next) => {
 				attributes: {
 					exclude: ['password'],
 				},
+
+				include: [
+					{
+						model: Post,
+						attributes: ['id'],
+					},
+				],
 			});
 
 			return res.status(200).json(fullUserWithoutPassword);
@@ -31,6 +38,45 @@ router.get('/', async (req, res, next) => {
 	} catch (e) {
 		console.error(e);
 		next(e);
+	}
+});
+
+router.get('/:nickname', async (req, res, next) => {
+	try {
+		const fullUserWithoutPassword = await User.findOne({
+			where: { nickname: req.params.nickname },
+			attributes: {
+				exclude: ['password'],
+			},
+			include: [
+				{
+					model: Post,
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					as: 'Followings',
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					as: 'Followers',
+					attributes: ['id'],
+				},
+			],
+		});
+		if (fullUserWithoutPassword) {
+			const data = fullUserWithoutPassword.toJSON();
+			data.Posts = data.Posts.length; // 개인정보 침해 예방
+			data.Followers = data.Followers.length;
+			data.Followings = data.Followings.length;
+			res.status(200).json(data);
+		} else {
+			res.status(404).json('존재하지 않는 사용자입니다.');
+		}
+	} catch (error) {
+		console.error(error);
+		next(error);
 	}
 });
 
@@ -57,6 +103,7 @@ router.post('/signup', async (req, res, next) => {
 			gender: req.body.gender,
 			birth: req.body.birth,
 			profileImg: '',
+			introduction: '',
 		});
 
 		res.status(201).send('ok');
