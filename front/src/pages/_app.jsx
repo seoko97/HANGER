@@ -39,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
 		 height:100%;
          font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
          font-size: 10px;
-		 background-color: #EFF2F5;
+		 background-color: #FAFAFA;
 
      }
 	 input[type='date'], input[type='time'] {
