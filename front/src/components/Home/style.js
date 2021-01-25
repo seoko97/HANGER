@@ -6,7 +6,7 @@ export const LeftForm = styled.div`
 	position: relative;
 	margin-right: 3rem;
 
-	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+	@media (max-width: ${({ theme }) => theme.deviceSizes.PC}) {
 		width: 65%;
 	}
 
@@ -24,7 +24,7 @@ export const RightForm = styled.div`
 	position: fixed;
 	height: 100vh;
 
-	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+	@media (max-width: ${({ theme }) => theme.deviceSizes.PC}) {
 		max-width: 28.5%;
 	}
 

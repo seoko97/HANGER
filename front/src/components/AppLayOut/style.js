@@ -21,7 +21,7 @@ export const Section = styled.section`
 
 	flex: 1;
 
-	@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+	@media (max-width: ${({ theme }) => theme.deviceSizes.PC}) {
 		width: 90%;
 	}
 

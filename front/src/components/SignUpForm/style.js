@@ -109,4 +109,8 @@ export const CheckBox = styled.div`
 	padding: 0.8rem 1rem;
 
 	justify-content: space-between;
+
+	& > label {
+		width: 100%;
+	}
 `;
