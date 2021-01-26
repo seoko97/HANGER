@@ -95,6 +95,9 @@ export const PostCardAction = styled.ul`
 		&:focus {
 			color: #40a9ff;
 		}
+		& > span {
+			margin-left: 1rem;
+		}
 	}
 `;
 

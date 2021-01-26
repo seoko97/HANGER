@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Avatar from '../UI/Avatar';
 
 export const ProfileWrapper = styled.div`
 	width: 100%;
@@ -10,6 +11,19 @@ export const ProfileHeader = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 4.4rem;
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		padding: 1.5rem;
+		flex-direction: column;
+
+		margin-bottom: 0;
+	}
+`;
+
+export const MobileHeader = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 1.5rem;
 `;
 
 export const AvatarWrapper = styled.div`
@@ -18,8 +32,34 @@ export const AvatarWrapper = styled.div`
 	justify-content: center;
 	flex-shrink: 1;
 	margin-right: 2rem;
-	& > div {
+	min-width: 150px;
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		width: 77px;
+		height: 77px;
+		min-width: 77px;
+
+		& > div {
+			margin: 0;
+			width: 77px;
+			height: 77px;
+			min-width: 77px;
+			& span {
+				width: 77px;
+				height: 77px;
+				min-width: 77px;
+				& > svg {
+					width: 77px;
+					height: 77px;
+					min-width: 77px;
+					margin-top: 10px;
+				}
+			}
+		}
 	}
+`;
+
+export const ProfileAvatar = styled(AvatarWrapper)`
+	width: 100%;
 `;
 
 export const UserInfoWrapper = styled.div`
@@ -43,6 +83,25 @@ export const NicknameWrapper = styled.div`
 	& > h2 {
 		font-size: 28px;
 		font-weight: 300;
+	}
+
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 1 1 auto;
+		& > h2 {
+			margin-bottom: 1.2rem;
+		}
+		& > div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 30px;
+			margin: 0;
+		}
 	}
 `;
 
@@ -77,6 +136,9 @@ export const NameAndIntroWrapper = styled.div`
 	& > span {
 		white-space: wrap;
 	}
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		font-size: 1.4rem;
+	}
 `;
 
 export const MainContentWrapper = styled.div`
@@ -101,6 +163,17 @@ export const Divtag = styled.div`
 	.click_menu {
 		color: #000;
 		border-top: 1px solid #000;
+	}
+
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		& > div {
+			margin: 0;
+			&:first-child {
+				margin-left: 0;
+			}
+			display: flex;
+			flex: 1 1 auto;
+		}
 	}
 `;
 

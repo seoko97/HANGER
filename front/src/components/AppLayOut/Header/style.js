@@ -73,7 +73,6 @@ export const SignUpMenu = styled.div`
 	display: flex;
 	cursor: pointer;
 	border-radius: 7px;
-	padding: 1rem;
 	&:hover {
 		background-color: #e4e6eb;
 		transition-duration: 0.5s;
@@ -122,7 +121,10 @@ export const ItemList = styled(Card)`
 		}
 	}
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		width: 95vw;
+		width: 100vw;
+		box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+		top: 52px;
+		border-radius: 0;
 	}
 `;
 

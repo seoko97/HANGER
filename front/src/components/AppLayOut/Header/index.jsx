@@ -22,7 +22,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const me = useSelector((state) => state.user.me);
 
-	const [banner, bannerHandler, setBanner] = useInput(false);
+	const [banner, bannerHandler] = useInput(false);
 
 	const onlogOut = useCallback(() => {
 		dispatch({
@@ -49,31 +49,39 @@ const Header = () => {
 										<MenuWrapper>
 											<ItemList>
 												<div>
-													<div>
-														<Avatar size={50} borderGradient={true} />
+													<Link href={'/' + me.nickname}>
+														<div>
+															<Avatar
+																size={50}
+																borderGradient={true}
+															/>
 
-														<NameWrapper>
-															<div>
-																<span>{me.nickname}</span>
-															</div>
-															<div>
-																<span>
-																	{me.firstName + me.lastName}
-																</span>
-															</div>
-														</NameWrapper>
-													</div>
+															<NameWrapper>
+																<div>
+																	<span>{me.nickname}</span>
+																</div>
+																<div>
+																	<span>
+																		{me.firstName + me.lastName}
+																	</span>
+																</div>
+															</NameWrapper>
+														</div>
+													</Link>
+
 													<hr />
 													<div>검색창</div>
 													<hr />
-													<div>
-														<SignOutWrapper>
-															<VscBookmark size={25} />
-														</SignOutWrapper>
+													<Link href={'/' + me.nickname + '/saved'}>
 														<div>
-															<span>저장됨</span>
+															<SignOutWrapper>
+																<VscBookmark size={25} />
+															</SignOutWrapper>
+															<div>
+																<span>저장됨</span>
+															</div>
 														</div>
-													</div>
+													</Link>
 
 													<div onClick={onlogOut}>
 														<SignOutWrapper>
