@@ -2,11 +2,12 @@ import styled, { css } from 'styled-components';
 import React from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 
-const AvatarWrapper = styled.div`
+export const AvatarWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: ${({ size }) => (size ? `${size}px` : '32px')};
+	min-width: ${({ size }) => (size ? `${size}px` : '32px')};
 	height: ${({ size }) => (size ? `${size}px` : '32px')};
 	margin-right: 1rem;
 	border-radius: 50%;

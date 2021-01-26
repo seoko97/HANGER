@@ -147,9 +147,15 @@ const PostCard = ({ post }) => {
 				</li>
 				<li cursor="pointer">
 					{liked ? (
-						<AiTwotoneHeart onClick={onUnLike} color="#fc8383" cursor="pointer" />
+						<>
+							<AiTwotoneHeart onClick={onUnLike} color="#fc8383" cursor="pointer" />
+							<span>{post.Likers.length}</span>
+						</>
 					) : (
-						<AiOutlineHeart onClick={onLike} cursor="pointer" />
+						<>
+							<AiOutlineHeart onClick={onLike} cursor="pointer" />
+							<span>{post.Likers.length}</span>
+						</>
 					)}
 				</li>
 				<li onClick={setCommentForm}>
