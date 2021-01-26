@@ -19,12 +19,6 @@ const Save = () => {
 		}
 	}, [unSavePostDone !== 'undefined' && unSavePostDone]);
 
-	useEffect(() => {
-		if (me?.id !== userInfo.id) {
-			Router.push('/');
-		}
-	}, []);
-
 	return (
 		<>
 			{me && (
