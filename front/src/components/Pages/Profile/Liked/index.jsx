@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_USER_LIKE_POSTS_REQUEST } from '../../../../reducers/post';
 import PostCard from '../../../PostCard';
 import UserProfileForm from '../../../UserProfileForm';
 
@@ -11,7 +12,7 @@ const Like = () => {
 	useEffect(() => {
 		if (unLikePostDone) {
 			return dispatch({
-				type: LOAD_USER_SAVE_POSTS_REQUEST,
+				type: LOAD_USER_LIKE_POSTS_REQUEST,
 				data: { nickname: userInfo.nickname },
 			});
 		}
