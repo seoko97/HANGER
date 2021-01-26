@@ -11,7 +11,6 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 	// 로그인한 유저 정보 불러오기
 	try {
-		console.log('내정보 요청');
 		// 만약 유저 정보가 존재 한다면
 		if (req.user) {
 			const fullUserWithoutPassword = await User.findOne({
