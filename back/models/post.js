@@ -15,8 +15,8 @@ module.exports = class Post extends (
 			{
 				modelName: 'Post',
 				tableName: 'posts',
-				charset: 'utf8',
-				collate: 'utf8_general_ci',
+				charset: 'utf8mb4',
+				collate: 'utf8mb4_unicode_ci', // 이모티콘 저장
 				sequelize,
 			},
 		);
@@ -28,6 +28,7 @@ module.exports = class Post extends (
 		db.Post.belongsTo(db.User);
 		db.Post.hasMany(db.Comment);
 		db.Post.hasMany(db.Image);
+		db.Post.hasMany(db.Notice);
 
 		// n:m관계
 		db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });

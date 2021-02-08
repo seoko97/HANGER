@@ -49,8 +49,8 @@ module.exports = class User extends (
 			{
 				modelName: 'User',
 				tableName: 'users',
-				charset: 'utf8',
-				collate: 'utf8_general_ci', // 한글 저장
+				charset: 'utf8mb4',
+				collate: 'utf8mb4_unicode_ci', // 한글 저장
 				sequelize,
 			},
 		);
@@ -58,6 +58,9 @@ module.exports = class User extends (
 	static associate(db) {
 		db.User.hasMany(db.Post);
 		db.User.hasMany(db.Comment);
+
+		db.User.hasMany(db.Notice);
+		db.User.hasMany(db.FollowNotice);
 
 		db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
 		db.User.belongsToMany(db.Post, { through: 'Save', as: 'Saved' });
