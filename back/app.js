@@ -10,6 +10,7 @@ const path = require('path');
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
+const searchRouter = require('./routes/search');
 const db = require('./models');
 const passportConfig = require('./passport');
 
@@ -54,10 +55,10 @@ app.get('/', (req, res) => {
 });
 
 // API는 다른 서비스가 내 서비스의 기능을 실행할 수 있게 열어둔 창구
-// app.use('/posts', postsRouter);
 app.use('/post', postRouter);
 app.use('/user', userRouter);
 app.use('/posts', postsRouter);
+app.use('/search', searchRouter);
 // app.use('/hashtag', hashtagRouter);
 
 app.listen(3065, () => {
