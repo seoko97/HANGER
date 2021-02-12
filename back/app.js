@@ -7,12 +7,12 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const path = require('path');
 
-const userRouter = require('./routes/user');
-const postRouter = require('./routes/post');
-const postsRouter = require('./routes/posts');
-const searchRouter = require('./routes/search');
-const db = require('./models');
-const passportConfig = require('./passport');
+const userRouter = require('./src/routes/user');
+const postRouter = require('./src/routes/post');
+const postsRouter = require('./src/routes/posts');
+const searchRouter = require('./src/routes/search');
+const db = require('./src/models');
+const passportConfig = require('./src/passport');
 
 dotenv.config();
 const app = express();
