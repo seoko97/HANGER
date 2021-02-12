@@ -12,18 +12,15 @@ router.get('/', async (req, res, next) => {
 		if (parseInt(req.query.lastId, 10)) {
 			// 초기 로딩이 아닐 때
 			where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
-		} // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+		}
 		const posts = await Post.findAll({
-			// where,
+			where,
 			limit: 10,
-			order: [
-				['createdAt', 'DESC'],
-				[Comment, 'createdAt', 'DESC'],
-			],
+			order: [['createdAt', 'DESC']],
 			include: [
 				{
 					model: User,
-					attributes: ['id', 'nickname'],
+					attributes: ['id', 'nickname', 'profileImg'],
 				},
 				{
 					model: Image,
@@ -51,7 +48,7 @@ router.get('/', async (req, res, next) => {
 				},
 			],
 		});
-		res.status(200).json(posts);
+		return res.status(200).json(posts);
 	} catch (error) {
 		console.error(error);
 		next(error);
@@ -68,19 +65,21 @@ router.get('/:nickname', async (req, res, next) => {
 			},
 		});
 
+		const where = {};
+		if (parseInt(req.query.lastId, 10)) {
+			where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
+		}
+
+		where.UserId = user.id;
+
 		const posts = await Post.findAll({
-			where: {
-				UserId: user.id,
-			},
+			where,
 			limit: 10,
-			order: [
-				['createdAt', 'DESC'],
-				[Comment, 'createdAt', 'DESC'],
-			],
+			order: [['createdAt', 'DESC']],
 			include: [
 				{
 					model: User,
-					attributes: ['id', 'nickname'],
+					attributes: ['id', 'nickname', 'profileImg'],
 				},
 				{
 					model: Image,
@@ -125,16 +124,19 @@ router.get('/:nickname/saved', async (req, res, next) => {
 			},
 		});
 
+		const where = {};
+		if (parseInt(req.query.lastId, 10)) {
+			where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
+		}
+
 		const posts = await Post.findAll({
+			where,
 			limit: 10,
-			order: [
-				['createdAt', 'DESC'],
-				[Comment, 'createdAt', 'DESC'],
-			],
+			order: [['createdAt', 'DESC']],
 			include: [
 				{
 					model: User,
-					attributes: ['id', 'nickname'],
+					attributes: ['id', 'nickname', 'profileImg'],
 				},
 				{
 					model: Image,
@@ -158,9 +160,7 @@ router.get('/:nickname/saved', async (req, res, next) => {
 					model: User,
 					through: 'Save',
 					as: 'Savers',
-					where: {
-						id: user.id,
-					},
+					where: { id: user.id },
 					attributes: ['id'],
 				},
 			],
@@ -182,16 +182,19 @@ router.get('/:nickname/like', async (req, res, next) => {
 			},
 		});
 
+		const where = {};
+		if (parseInt(req.query.lastId, 10)) {
+			where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
+		}
+
 		const posts = await Post.findAll({
+			where,
 			limit: 10,
-			order: [
-				['createdAt', 'DESC'],
-				[Comment, 'createdAt', 'DESC'],
-			],
+			order: [['createdAt', 'DESC']],
 			include: [
 				{
 					model: User,
-					attributes: ['id', 'nickname'],
+					attributes: ['id', 'nickname', 'profileImg'],
 				},
 				{
 					model: Image,
@@ -210,7 +213,7 @@ router.get('/:nickname/like', async (req, res, next) => {
 					through: 'Like',
 					as: 'Likers',
 					where: {
-						id: user.id,
+						id: { [Op.like]: user.id },
 					},
 					attributes: ['id'],
 				},

@@ -1,9 +1,7 @@
 const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class User extends (
-	Model
-) {
+module.exports = class User extends Model {
 	static init(sequelize) {
 		return super.init(
 			{
@@ -60,7 +58,6 @@ module.exports = class User extends (
 		db.User.hasMany(db.Comment);
 
 		db.User.hasMany(db.Notice);
-		db.User.hasMany(db.FollowNotice);
 
 		db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
 		db.User.belongsToMany(db.Post, { through: 'Save', as: 'Saved' });

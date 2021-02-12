@@ -4,14 +4,13 @@ const path = require('path');
 const fs = require('fs');
 const multerS3 = require('multer-s3');
 
-const { Post, Image, User, Hashtag, Comment } = require('../models');
+const { Post, Image, User, Hashtag, Comment, Notice } = require('../models');
 
 const router = express.Router();
 
 try {
 	fs.accessSync('uploads');
 } catch (error) {
-	console.log('uploads 폴더가 없으므로 생성합니다.');
 	fs.mkdirSync('uploads');
 }
 
@@ -22,12 +21,9 @@ const upload = multer({
 		},
 		filename(req, file, done) {
 			const ext = path.extname(file.originalname); // 확장자 추출
-			console.log('확장자@@@@@@@ : ', ext);
-
 			const basename = path.basename(file.originalname, ext);
-			console.log('파일이름@@@@@@@ : ', basename);
 
-			done(null, basename + '_', new Date().getTime() + ext); // 추출한 확장자와 파일이름을 합침
+			done(null, basename + '_' + new Date().getTime() + ext); // 추출한 확장자와 파일이름을 합침
 		},
 	}),
 	// 파일 사이지 지정 (20mb)
@@ -55,15 +51,11 @@ router.post('/', upload.none(), async (req, res, next) => {
 
 		if (req.body.image) {
 			if (Array.isArray(req.body.image)) {
-				console.log('이미지 여러개 입니다@@@@@@@@');
-				// 이미지를 여러 개 올리면 image: [제로초.png, 부기초.png]
 				const images = await Promise.all(
 					req.body.image.map((image) => Image.create({ src: image })),
 				);
 				await post.addImages(images);
 			} else {
-				console.log('이미지 한개 입니다@@@@@@@@');
-				// 이미지를 하나만 올리면 image: 제로초.png
 				const image = await Image.create({ src: req.body.image });
 				await post.addImages(image);
 			}
@@ -86,7 +78,7 @@ router.post('/', upload.none(), async (req, res, next) => {
 				},
 				{
 					model: User,
-					attributes: ['id', 'nickname'],
+					attributes: ['id', 'nickname', 'profileImg'],
 				},
 				{
 					model: User,
@@ -139,6 +131,14 @@ router.post('/:postId/comment', async (req, res, next) => {
 			],
 		});
 
+		post.UserId !== req.user.id &&
+			(await Notice.create({
+				noticed: 'comment',
+				targetUserId: req.user.id,
+				UserId: post.UserId,
+				PostId: post.id,
+			}));
+
 		return res.status(200).json(fullComment);
 	} catch (error) {
 		console.error(error);
@@ -169,6 +169,16 @@ router.patch('/:postId/like', async (req, res, next) => {
 
 		await post.addLikers(req.user.id);
 
+		post.UserId !== req.user.id &&
+			(await Notice.findOrCreate({
+				where: {
+					noticed: 'like',
+					targetUserId: req.user.id,
+					UserId: post.UserId,
+					PostId: post.id,
+				},
+			}));
+
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
 		console.error(error);
@@ -183,6 +193,16 @@ router.delete('/:postId/like', async (req, res, next) => {
 
 		await post.removeLikers(req.user.id);
 
+		post.UserId !== req.user.id &&
+			(await Notice.destroy({
+				where: {
+					noticed: 'like',
+					targetUserId: req.user.id,
+					UserId: post.UserId,
+					PostId: post.id,
+				},
+			}));
+
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
 		console.error(error);
@@ -196,6 +216,15 @@ router.patch('/:postId/save', async (req, res, next) => {
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
 
 		await post.addSavers(req.user.id);
+		post.UserId !== req.user.id &&
+			(await Notice.findOrCreate({
+				where: {
+					noticed: 'save',
+					targetUserId: req.user.id,
+					UserId: post.UserId,
+					PostId: post.id,
+				},
+			}));
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
@@ -211,7 +240,60 @@ router.delete('/:postId/save', async (req, res, next) => {
 
 		await post.removeSavers(req.user.id);
 
+		post.UserId !== req.user.id &&
+			(await Notice.destroy({
+				where: {
+					noticed: 'save',
+					targetUserId: req.user.id,
+					UserId: post.UserId,
+					PostId: post.id,
+				},
+			}));
+
 		return res.json({ PostId: post.id, UserId: req.user.id });
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+});
+
+router.get('/singlePost/:postId', upload.none(), async (req, res, next) => {
+	try {
+		const singlePost = await Post.findOne({
+			where: { id: req.params.postId },
+			include: [
+				{
+					model: User,
+					attributes: ['id', 'nickname', 'profileImg'],
+				},
+				{
+					model: Image,
+				},
+				{
+					model: Comment,
+					include: [
+						{
+							model: User,
+							attributes: ['id', 'nickname'],
+						},
+					],
+				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Save',
+					as: 'Savers',
+					attributes: ['id'],
+				},
+			],
+		});
+
+		return res.status(200).json(singlePost);
 	} catch (error) {
 		console.error(error);
 		next(error);
