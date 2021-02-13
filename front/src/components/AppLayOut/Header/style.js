@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Card from '../../UI/Card';
 
 export const HeaderWrapper = styled.header`
@@ -65,34 +65,91 @@ export const HearderNav = styled.nav`
 			margin-left: 1em;
 		}
 	}
-	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-	}
 `;
 
 export const SignUpMenu = styled.div`
 	display: flex;
 	cursor: pointer;
+	justify-content: center;
+	align-items: center;
 	border-radius: 7px;
+	padding: 0.6rem 0.5rem;
 	&:hover {
 		background-color: #e4e6eb;
 		transition-duration: 0.5s;
 	}
 
-	& > div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	${({ isBannerComponentVisible }) =>
+		isBannerComponentVisible &&
+		css`
+			background-color: #e4e6eb;
+			transition-duration: 0.5s;
+		`}
+`;
+
+export const AvatarWrapper = styled.div`
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		& > div {
+			margin-right: 0;
+		}
+	}
+`;
+
+export const NicknameWrapper = styled.div`
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		display: none;
 	}
 `;
 
 export const MenuWrapper = styled.div`
 	position: relative;
+
+	animation: fadein 0.4s;
+	-moz-animation: fadein 0.4s; /* Firefox */
+	-webkit-animation: fadein 0.4s; /* Safari and Chrome */
+	-o-animation: fadein 0.4s; /* Opera */
+
+	@keyframes fadein {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-moz-keyframes fadein {
+		/* Firefox */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-webkit-keyframes fadein {
+		/* Safari and Chrome */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-o-keyframes fadein {
+		/* Opera */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 `;
 export const ItemList = styled(Card)`
 	width: 400px;
 	position: absolute;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-	top: 55px;
+	top: 37px;
 	right: -10px;
 	border-radius: 5px;
 	z-index: 100;
@@ -123,8 +180,9 @@ export const ItemList = styled(Card)`
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		width: 100vw;
 		box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-		top: 52px;
+		top: 35px;
 		border-radius: 0;
+		right: -15px;
 	}
 `;
 
@@ -144,11 +202,78 @@ export const SignOutWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-right: 2rem;
-	background-color: #e4e6eb;
+	background-color: #f5f5f5;
 	padding: 0.6rem;
 	border-radius: 50%;
+	cursor: pointer;
+
 	& + div {
 		font-weight: 600;
+
+		margin-left: 2rem;
 	}
+	&:hover {
+		background-color: #e8e8e8;
+		color: #40a9ff;
+	}
+`;
+
+export const SearchFormWrapper = styled.div`
+	display: flex;
+	position: relative;
+`;
+
+export const SearchForm = styled.div`
+	margin-right: 2rem;
+
+	& > label {
+		position: relative;
+		min-width: 223px;
+		min-height: 40px;
+		padding: 1rem 0.8rem;
+		background-color: #f5f5f5;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 20px;
+
+		& > svg {
+			margin-right: 1rem;
+		}
+		& > input {
+			display: flex;
+			align-items: center;
+			border: 0;
+			font-size: 1.5rem;
+			background-color: #f5f5f5;
+			outline: none;
+		}
+		input::-ms-clear,
+		input::-ms-reveal {
+			display: none;
+			width: 0;
+			height: 0;
+		}
+		input::-webkit-search-decoration,
+		input::-webkit-search-cancel-button,
+		input::-webkit-search-results-button,
+		input::-webkit-search-results-decoration {
+			display: none;
+		}
+	}
+`;
+
+export const SearchListInner = styled(Card)`
+	min-width: 300px;
+	max-height: 250px;
+	position: absolute;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2);
+	border: 0;
+	display: flex;
+	flex-direction: column;
+	font-size: 1.4rem;
+
+	top: 10px;
+	left: -35px;
 `;
