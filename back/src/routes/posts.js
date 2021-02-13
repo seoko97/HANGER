@@ -180,15 +180,27 @@ router.get('/:nickname/like', async (req, res, next) => {
 			attributes: {
 				exclude: ['password'],
 			},
+			include: [
+				{
+					model: Post,
+					through: 'Like',
+					as: 'Liked',
+					attributes: ['id'],
+				},
+			],
 		});
+
+		const result = await Promise.all(user.Liked.map((v) => v.id));
 
 		const where = {};
 		if (parseInt(req.query.lastId, 10)) {
 			where.id = { [Op.lt]: parseInt(req.query.lastId, 10) };
 		}
 
-		const posts = await Post.findAll({
-			where,
+		const post = await Post.findAll({
+			where: {
+				[Op.and]: [{ id: result }, where.id ? { id: where.id } : {}],
+			},
 			limit: 10,
 			order: [['createdAt', 'DESC']],
 			include: [
@@ -212,9 +224,12 @@ router.get('/:nickname/like', async (req, res, next) => {
 					model: User,
 					through: 'Like',
 					as: 'Likers',
-					where: {
-						id: { [Op.like]: user.id },
-					},
+					attributes: ['id'],
+				},
+				{
+					model: User,
+					through: 'Like',
+					as: 'Likers',
 					attributes: ['id'],
 				},
 				{
@@ -226,7 +241,7 @@ router.get('/:nickname/like', async (req, res, next) => {
 			],
 		});
 
-		return res.status(200).json(posts);
+		return res.status(200).json(post);
 	} catch (error) {
 		console.error(error);
 		next(error);
