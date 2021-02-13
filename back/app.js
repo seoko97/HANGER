@@ -11,6 +11,7 @@ const userRouter = require('./src/routes/user');
 const postRouter = require('./src/routes/post');
 const postsRouter = require('./src/routes/posts');
 const searchRouter = require('./src/routes/search');
+const tagRouter = require('./src/routes/tag');
 const db = require('./src/models');
 const passportConfig = require('./src/passport');
 
@@ -59,7 +60,7 @@ app.use('/post', postRouter);
 app.use('/user', userRouter);
 app.use('/posts', postsRouter);
 app.use('/search', searchRouter);
-// app.use('/hashtag', hashtagRouter);
+app.use('/tag', tagRouter);
 
 app.listen(3065, () => {
 	console.log('서버 실행 중!');
