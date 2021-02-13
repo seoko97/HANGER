@@ -15,4 +15,4 @@ const AppLayOut = ({ children }) => {
 	);
 };
 
-export default AppLayOut;
+export default React.memo(AppLayOut);
