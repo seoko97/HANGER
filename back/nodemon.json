@@ -1,11 +1,11 @@
 {
     "watch": [
-      "index.js",
-      "routes",
-      "config",
-      "passport",
-      "models",
-      "nodemon.json"
+      "./src/index.js",
+      "./src/routes",
+      "./src/config",
+      "./src/passport",
+      "./src/models",
+      "/nodemon.json"
     ],
     "exec": "node app.js",
     "ext": "js json"
