@@ -62,6 +62,6 @@ app.use('/posts', postsRouter);
 app.use('/search', searchRouter);
 app.use('/tag', tagRouter);
 
-app.listen(process.env.PORT === 80 ? process.env.PORT : 3065, () => {
-	console.log('서버 실행 중!');
+app.listen(process.env.NODE_ENV == 'production' ? process.env.PORT : 3065, () => {
+	console.log(`서버 실행 중!${process.env.PORT} `);
 });
