@@ -96,7 +96,6 @@ router.post('/', upload.none(), async (req, res, next) => {
 		});
 		return res.status(201).json(fullPost);
 	} catch (err) {
-		console.error(err);
 		next(err);
 	}
 });
@@ -141,7 +140,6 @@ router.post('/:postId/comment', async (req, res, next) => {
 
 		return res.status(200).json(fullComment);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -157,7 +155,6 @@ router.delete('/:postId', async (req, res, next) => {
 
 		return res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -181,7 +178,6 @@ router.patch('/:postId/like', async (req, res, next) => {
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -205,7 +201,6 @@ router.delete('/:postId/like', async (req, res, next) => {
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -228,7 +223,6 @@ router.patch('/:postId/save', async (req, res, next) => {
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -252,7 +246,6 @@ router.delete('/:postId/save', async (req, res, next) => {
 
 		return res.json({ PostId: post.id, UserId: req.user.id });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -293,9 +286,12 @@ router.get('/singlePost/:postId', upload.none(), async (req, res, next) => {
 			],
 		});
 
-		return res.status(200).json(singlePost);
+		if (singlePost) {
+			return res.status(200).json(singlePost);
+		} else {
+			return res.status(404).send('존재하지 않습니다.');
+		}
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });

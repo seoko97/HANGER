@@ -68,7 +68,6 @@ router.get('/', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (e) {
-		console.error(e);
 		next(e);
 	}
 });
@@ -103,12 +102,11 @@ router.get('/:nickname', async (req, res, next) => {
 			data.Followers = data.Followers.length;
 			data.Followings = data.Followings.length;
 
-			res.status(200).json(data);
+			return res.status(200).json(data);
 		} else {
-			res.status(404).json('존재하지 않는 사용자입니다.');
+			return res.status(404).send('존재하지 않는 사용자입니다.');
 		}
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -117,7 +115,7 @@ router.post('/signup', async (req, res, next) => {
 	// 회원가입 실행
 	try {
 		if (req.body.userId.length < 4) {
-			return res.status(403).send('아이디를 4글자 이상 입력해주세요.');
+			return res.status(404).send('아이디를 4글자 이상 입력해주세요.');
 		}
 
 		const exUser = await User.findOne({
@@ -127,7 +125,7 @@ router.post('/signup', async (req, res, next) => {
 			},
 		});
 		if (exUser) {
-			return res.status(403).send('이미 사용 중인 아이디입니다.');
+			return res.status(404).send('이미 사용 중인 아이디입니다.');
 		}
 
 		const nicknameUser = await User.findOne({
@@ -137,7 +135,7 @@ router.post('/signup', async (req, res, next) => {
 		});
 
 		if (nicknameUser) {
-			return res.status(403).send('존재하는 닉네임입니다.');
+			return res.status(404).send('존재하는 닉네임입니다.');
 		}
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
@@ -155,7 +153,6 @@ router.post('/signup', async (req, res, next) => {
 
 		res.status(201).send('ok');
 	} catch (error) {
-		console.error(error);
 		next(error); // status 500
 	}
 });
@@ -164,7 +161,6 @@ router.post('/signin', (req, res, next) => {
 	// 로그인 전략
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
-			console.error(err);
 			return next(err);
 		}
 
@@ -174,11 +170,10 @@ router.post('/signin', (req, res, next) => {
 
 		return req.login(user, async (loginErr) => {
 			if (loginErr) {
-				console.error(loginErr);
 				return next(loginErr);
 			}
 
-			// post 테이블과 팔로우관계 테이블 등을 정의 후 include 명령어를 통해 데티어를 함께 전송
+			// post 테이블과 팔로우관계 테이블 등을 정의 후 include 명령어를 통해 데이터를 함께 전송
 			const fulluserWithOutPassword = await User.findOne({
 				where: { id: user.id },
 				attributes: {
@@ -216,6 +211,14 @@ router.post('/signout', (req, res) => {
 
 router.patch('/:nickname/edit', async (req, res, next) => {
 	try {
+		const user = await User.findOne({
+			where: {
+				nickname: req.params.nickname,
+			},
+		});
+
+		if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
+
 		await User.update(
 			{
 				nickname: req.body.newNickname,
@@ -253,12 +256,18 @@ router.patch('/:nickname/edit', async (req, res, next) => {
 
 		return res.status(200).json(fullUserWithoutPassword);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
 
 router.patch('/:nickname/profileimg', upload.single('image'), async (req, res, next) => {
+	const user = await User.findOne({
+		where: {
+			nickname: req.params.nickname,
+		},
+	});
+
+	if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
 	await User.update(
 		{
 			profileImg: req.file.filename,
@@ -307,7 +316,6 @@ router.patch('/:userId/follow', async (req, res, next) => {
 
 		return res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -334,7 +342,6 @@ router.delete('/:userId/follow', async (req, res, next) => {
 
 		return res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -367,7 +374,6 @@ router.get('/:userId/followers', async (req, res, next) => {
 
 		return res.status(200).json(followers);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -400,7 +406,6 @@ router.get('/:userId/followings', async (req, res, next) => {
 
 		return res.status(200).json(followings);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -435,7 +440,6 @@ router.post('/notice', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -471,7 +475,6 @@ router.post('/followNotice', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -507,7 +510,6 @@ router.post('/moblieNotice', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });

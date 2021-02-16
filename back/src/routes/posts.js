@@ -50,7 +50,6 @@ router.get('/', async (req, res, next) => {
 		});
 		return res.status(200).json(posts);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -64,6 +63,8 @@ router.get('/:nickname', async (req, res, next) => {
 				exclude: ['password'],
 			},
 		});
+
+		if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
 
 		const where = {};
 		if (parseInt(req.query.lastId, 10)) {
@@ -110,19 +111,23 @@ router.get('/:nickname', async (req, res, next) => {
 
 		return res.status(200).json(posts);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
 
 router.get('/:nickname/saved', async (req, res, next) => {
 	try {
+		if (req.user?.nickname !== req.params.nickname)
+			return res.status(404).send('접근할 수 없습니다.');
+
 		const user = await User.findOne({
 			where: { nickname: req.params.nickname },
 			attributes: {
 				exclude: ['password'],
 			},
 		});
+
+		if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
 
 		const where = {};
 		if (parseInt(req.query.lastId, 10)) {
@@ -168,7 +173,6 @@ router.get('/:nickname/saved', async (req, res, next) => {
 
 		return res.status(200).json(posts);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });
@@ -189,6 +193,8 @@ router.get('/:nickname/like', async (req, res, next) => {
 				},
 			],
 		});
+
+		if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
 
 		const result = await Promise.all(user.Liked.map((v) => v.id));
 
@@ -243,7 +249,6 @@ router.get('/:nickname/like', async (req, res, next) => {
 
 		return res.status(200).json(post);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });

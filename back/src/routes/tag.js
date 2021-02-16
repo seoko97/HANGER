@@ -13,6 +13,8 @@ router.get('/:hashtag', async (req, res, next) => {
 			},
 		});
 
+		if (!tag) return res.status(404).send('존재하지 않는 태그입니다.');
+
 		const where = {};
 		if (parseInt(req.query.lastId, 10)) {
 			// 초기 로딩이 아닐 때
@@ -65,7 +67,6 @@ router.get('/:hashtag', async (req, res, next) => {
 
 		return res.status(200).json(tagPosts);
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 });

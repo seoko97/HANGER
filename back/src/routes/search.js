@@ -53,7 +53,6 @@ router.post('/:content', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (e) {
-		console.error(e);
 		next(e);
 	}
 });
@@ -88,7 +87,6 @@ router.post('/:content/tag', async (req, res, next) => {
 			return res.status(400).json('로그인을 해주세요');
 		}
 	} catch (e) {
-		console.error(e);
 		next(e);
 	}
 });
