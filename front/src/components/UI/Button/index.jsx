@@ -5,7 +5,6 @@ export const ButtonStyle = styled.button`
 	background-color: #1890ff;
 	border-color: #1890ff;
 	box-sizing: border-box;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
 	box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.045);
 	display: flex;
 	justify-content: center;
