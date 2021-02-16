@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { VscBookmark, VscSignOut } from 'react-icons/vsc';
-import { AiOutlineSearch, AiOutlineLike, AiOutlineEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
+import { VscBookmark, VscSignOut } from 'react-icons/vsc';
+import { AiOutlineSearch, AiOutlineLike, AiOutlineEdit } from 'react-icons/ai';
 import Loader from '../../UI/Loader';
 import Avatar from '../../UI/Avatar';
 import useInput from '../../../hooks/useInput';
@@ -92,7 +92,9 @@ const Header = () => {
 			<HeaderWrapper>
 				<HeaderInner>
 					<HeaderPinWrapper>
-						<Link href="/">지석호(로고)</Link>
+						<Link href="/">
+							<img src={'/logo.png'} />
+						</Link>
 					</HeaderPinWrapper>
 					<HearderNav>
 						{me ? (
@@ -182,7 +184,7 @@ const Header = () => {
 													<Link href={`/${me.nickname}/saved`}>
 														<div>
 															<SignOutWrapper>
-																<VscBookmark size={25} />
+																<VscBookmark size={20} />
 															</SignOutWrapper>
 															<div>
 																<span>저장됨</span>
@@ -193,7 +195,7 @@ const Header = () => {
 													<Link href={`/${me.nickname}/liked`}>
 														<div>
 															<SignOutWrapper>
-																<AiOutlineLike size={25} />
+																<AiOutlineLike size={20} />
 															</SignOutWrapper>
 															<div>
 																<span>좋아요</span>
@@ -203,17 +205,18 @@ const Header = () => {
 													<Link href={`/${me.nickname}/edit`}>
 														<div>
 															<SignOutWrapper>
-																<AiOutlineEdit size={25} />
+																<AiOutlineEdit size={20} />
 															</SignOutWrapper>
 															<div>
 																<span>프로필 수정</span>
 															</div>
 														</div>
 													</Link>
+													<hr />
 
 													<div onClick={onlogOut}>
 														<SignOutWrapper>
-															<VscSignOut size={25} />
+															<VscSignOut size={20} />
 														</SignOutWrapper>
 														<div>
 															<span>로그아웃</span>
@@ -234,7 +237,7 @@ const Header = () => {
 									<Link href="/signup">회원가입</Link>
 								</li>
 								<li>
-									<div>사이트정보</div>
+									<Link href="/info">사이트정보</Link>
 								</li>
 							</ul>
 						)}

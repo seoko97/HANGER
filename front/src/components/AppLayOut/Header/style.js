@@ -46,6 +46,10 @@ export const HeaderPinWrapper = styled.div`
 	color: #40a9ff;
 	font-size: 1.6em;
 	white-space: nowrap;
+	& > img {
+		cursor: pointer;
+		height: 20px;
+	}
 `;
 
 export const HearderNav = styled.nav`
@@ -146,7 +150,8 @@ export const MenuWrapper = styled.div`
 	}
 `;
 export const ItemList = styled(Card)`
-	width: 400px;
+	width: 300px;
+	font-size: 1.4rem;
 	position: absolute;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
 	top: 37px;
@@ -162,7 +167,7 @@ export const ItemList = styled(Card)`
 			border-radius: 8px;
 			padding: 0.8rem;
 			cursor: pointer;
-			font-size: 1.5rem;
+			font-weight: 300;
 
 			&:hover,
 			&:active {
@@ -202,15 +207,13 @@ export const SignOutWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #f5f5f5;
 	padding: 0.6rem;
-	border-radius: 50%;
 	cursor: pointer;
 
 	& + div {
-		font-weight: 600;
-
-		margin-left: 2rem;
+		font-weight: 400;
+		font-size: 1.3rem;
+		margin-left: 1rem;
 	}
 	&:hover {
 		background-color: #e8e8e8;
