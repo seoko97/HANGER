@@ -40,9 +40,12 @@ export const PostFormInner = styled.div`
 			background-color: #e4e6e9;
 		}
 
+		@media (max-width: ${({ theme }) => theme.deviceSizes.TABLET}) {
+			font-size: 1.3rem;
+		}
+
 		@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 			width: 100%;
-			font-size: 1.3em;
 		}
 	}
 `;
