@@ -5,9 +5,8 @@ const comment = require('./comment');
 const image = require('./image');
 const hashtag = require('./hashtag');
 const notice = require('./notice');
-// const env = process.env.NODE_ENV || 'development'
 
-const env = 'development';
+const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 const db = {};
 
