@@ -31,8 +31,10 @@ export const PostCardHead = styled.div`
 	justify-content: flex-end;
 	border-bottom: 1px solid #e8e8e8;
 	padding: 1em 2em;
+	min-height: 53px;
 
 	& > button {
+		cursor: pointer;
 		border: 1px solid #ccc;
 		border-radius: 3px;
 		height: 32px;
@@ -50,6 +52,7 @@ export const PostCardHead = styled.div`
 
 export const PostCardBody = styled.div`
 	padding: 2rem;
+	padding-bottom: 1rem;
 `;
 
 export const BodyMeta = styled.div`
@@ -68,6 +71,9 @@ export const MetaDetailTitle = styled.div`
 	font-size: 1.6rem;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	& > span {
+		cursor: pointer;
+	}
 `;
 
 export const MetaDetailDescription = styled.div`
@@ -75,6 +81,8 @@ export const MetaDetailDescription = styled.div`
 	box-sizing: border-box;
 	font-size: 1.4rem;
 	line-height: 1.3em;
+	white-space: pre-wrap;
+	word-break: break-all;
 	& > a {
 		color: #40a9ff;
 	}
@@ -96,6 +104,7 @@ export const PostCardAction = styled.ul`
 			color: #40a9ff;
 		}
 		& > span {
+			font-size: 1.2rem;
 			margin-left: 1rem;
 		}
 	}
@@ -191,7 +200,10 @@ export const CommentsList = styled.div`
 	& > div {
 		display: block;
 
-		& > span {
+		& > span,
+		& > div {
+			white-space: pre-wrap;
+			word-break: break-all;
 			display: inline;
 			position: relative;
 			font-weight: 300;
@@ -207,4 +219,9 @@ export const CommentsList = styled.div`
 			cursor: pointer;
 		}
 	}
+`;
+
+export const TimeWrapper = styled.div`
+	color: #ccc;
+	margin-top: 1rem;
 `;
