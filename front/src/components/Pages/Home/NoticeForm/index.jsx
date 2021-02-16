@@ -73,7 +73,7 @@ const NoticeForm = () => {
 			fstHan(true);
 			twoHan(false);
 
-			if (hasMoreNotices && !userNoticeLoading) {
+			if (hasMoreNotices && !userNoticeLoading && !userNotice[0]) {
 				const lastId = userNotice[userNotice.length - 1]?.id;
 				return dispatch({
 					type: LOAD_USER_NOTICE_REQUEST,
@@ -89,7 +89,7 @@ const NoticeForm = () => {
 			fstHan(true);
 			twoHan(false);
 
-			if (hasMoreFollowNotices && !userFollowNoticeLoading) {
+			if (hasMoreFollowNotices && !userFollowNoticeLoading && !userFollowNotice[0]) {
 				const lastId = userFollowNotice[userFollowNotice.length - 1]?.id;
 				return dispatch({
 					type: LOAD_USER_FOLLOWNOTICE_REQUEST,
