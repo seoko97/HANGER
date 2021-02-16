@@ -4,7 +4,7 @@ import wrapper from '../../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST, LOAD_USER_INFO_REQUEST } from '../../../reducers/user';
 import { LOAD_USER_LIKE_POSTS_REQUEST } from '../../../reducers/post';
 
-export { default } from '../../../components/Pages/Profile/liked';
+export { default } from '../../../components/Pages/Profile/Liked';
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
 	const cookie = context.req?.headers.cookie;
