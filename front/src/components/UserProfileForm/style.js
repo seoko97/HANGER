@@ -12,9 +12,7 @@ export const ProfileHeader = styled.div`
 	flex-direction: row;
 	margin-bottom: 4.4rem;
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
-		padding: 1.5rem;
 		flex-direction: column;
-
 		margin-bottom: 0;
 	}
 `;
@@ -22,8 +20,8 @@ export const ProfileHeader = styled.div`
 export const MobileHeader = styled.div`
 	width: 100%;
 	display: flex;
+	padding: 1.5rem;
 	flex-direction: row;
-	margin-bottom: 1.5rem;
 `;
 
 export const AvatarWrapper = styled.div`
@@ -43,17 +41,6 @@ export const AvatarWrapper = styled.div`
 			width: 77px;
 			height: 77px;
 			min-width: 77px;
-			& span {
-				width: 77px;
-				height: 77px;
-				min-width: 77px;
-				& > svg {
-					width: 77px;
-					height: 77px;
-					min-width: 77px;
-					margin-top: 10px;
-				}
-			}
 		}
 	}
 `;
@@ -79,6 +66,7 @@ export const NicknameWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	white-space: 'pre-wrap';
 
 	& > h2 {
 		font-size: 28px;
@@ -88,6 +76,7 @@ export const NicknameWrapper = styled.div`
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		width: 100%;
 		display: flex;
+
 		flex-direction: column;
 		align-items: flex-start;
 		flex: 1 1 auto;
@@ -111,7 +100,12 @@ export const ChangeProfile = styled.div`
 	border: 1px solid #dbdbdb;
 	border-radius: 3px;
 	margin-left: 2rem;
+	transition-duration: 0.3s;
 	cursor: pointer;
+	&:hover {
+		background-color: #e8e8e8;
+		color: #40a9ff;
+	}
 `;
 
 export const UlListWrapper = styled.ul`
@@ -119,10 +113,31 @@ export const UlListWrapper = styled.ul`
 
 	& li:not(:last-child) {
 		margin-right: 2rem;
+		cursor: pointer;
 	}
 
 	& li > span {
 		font-weight: 600;
+	}
+
+	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		border-top: 1px solid #ccc;
+		display: flex;
+		font-size: 1.3rem;
+
+		& > li {
+			display: flex;
+			margin: 0;
+			flex: 1 1 auto;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 52px;
+			line-height: 20px;
+		}
+		& li:not(:last-child) {
+			margin-right: 0;
+		}
 	}
 `;
 
@@ -133,10 +148,11 @@ export const NameAndIntroWrapper = styled.div`
 		line-height: 24px;
 		font-weight: 600;
 	}
-	& > span {
-		white-space: wrap;
+	& > div {
+		white-space: pre-wrap;
 	}
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
+		padding: 1.5rem;
 		font-size: 1.4rem;
 	}
 `;
