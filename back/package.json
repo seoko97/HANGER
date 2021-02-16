@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "cross-env NODE_ENV=pruduction PORT=80 pm2 start app.js"
+    "start": "cross-env NODE_ENV=production PORT=80 pm2 start app.js"
   },
   "author": "Delv_Ji",
   "license": "MIT",
