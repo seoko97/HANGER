@@ -3,17 +3,39 @@ import styled, { css } from 'styled-components';
 export const ImagesBox = styled.div`
 	border: 1px solid #ccc;
 	box-sizing: border-box;
-	border-radius: 6px;
+	background-color: #f5f5f5;
 	margin-bottom: 1.5rem;
+	overflow: auto;
+	overscroll-behavior: contain;
+	overflow-x: hidden;
+	max-height: 40vh;
+	border-collapse: collapse;
+
+	::-webkit-scrollbar {
+		width: 5.2px;
+	}
+	::-webkit-scrollbar-track {
+		background-color: #f5f5f5;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #e8e8e8;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #404040;
+	}
+	::-webkit-scrollbar-thumb:active {
+		background: #808080;
+	}
 
 	& > div {
 		display: ${({ length }) => (length >= 2 ? 'inline-block' : 'flex')};
-		background-color: #e4e6e9;
+		background-color: #fff;
 		box-sizing: border-box;
-		border: 1px solid #fff;
-		border-radius: 6px;
+		border: 1px solid #ccc;
+		border-collapse: collapse;
 
 		& > div {
+			width: 100%;
 			position: relative;
 		}
 
@@ -41,7 +63,7 @@ export const ImagesBox = styled.div`
 				}
 			`}
 
-			${({ length }) =>
+		${({ length }) =>
 			length >= 3 &&
 			css`
 				width: 50%;
@@ -53,7 +75,14 @@ export const ImagesBox = styled.div`
 					height: 20vh;
 				}
 			`}
-		
+		${({ length }) =>
+			length > 3 &&
+			length % 2 === 0 &&
+			css`
+				& :last-child {
+					width: 100%;
+				}
+			`}
 
 		&> div > svg {
 			position: absolute;
