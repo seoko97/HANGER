@@ -39,7 +39,9 @@ const GlobalStyle = createGlobalStyle`
 		 height:100%;
          font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
          font-size: 10px;
+		 font-weight: 400;
 		 background-color: #FAFAFA;
+		 overscroll-behavior: none;
 
      }
 	 input[type='date'], input[type='time'] {
@@ -47,14 +49,15 @@ const GlobalStyle = createGlobalStyle`
 	}
 `;
 
-const SH_BLOG = ({ Component, pageProps }) => {
+const HANGER = ({ Component, pageProps }) => {
 	return (
 		<>
-			<GlobalStyle />
 			<ThemeProvider theme={theme}>
 				<Head>
-					<title>SH BLOG</title>
+					<title>HANGER</title>
 				</Head>
+				<GlobalStyle />
+
 				<AppLayOut>
 					<Component {...pageProps} />
 				</AppLayOut>
@@ -63,4 +66,4 @@ const SH_BLOG = ({ Component, pageProps }) => {
 	);
 };
 
-export default wrapper.withRedux(withReduxSaga(SH_BLOG));
+export default wrapper.withRedux(withReduxSaga(HANGER));
