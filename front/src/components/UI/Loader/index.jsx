@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
 import styled from 'styled-components';
+import ReactLoading from 'react-loading';
 
 const LoaderWrappers = styled.div`
 	position: absolute;
