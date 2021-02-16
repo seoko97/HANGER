@@ -7,10 +7,12 @@ import {
 	AiTwotoneHeart,
 	AiOutlineEllipsis,
 } from 'react-icons/ai';
+import { RiUserFollowLine } from 'react-icons/ri';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import PostImage from './PostImage';
 import Avatar from '../UI/Avatar';
 import Button from '../UI/Button';
+import useTimeForToday from '../../hooks/useTimeForToday';
 import useClick from '../../hooks/useClick';
 import useInput from '../../hooks/useInput';
 import {
@@ -34,8 +36,10 @@ import {
 	PostCardHead,
 	PostCardWrapper,
 	Balloon,
+	TimeWrapper,
 } from './style';
 import HashTag from '../HashTag';
+import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../../reducers/user';
 import Link from 'next/link';
 
 const PostCard = ({ post }) => {
@@ -46,13 +50,25 @@ const PostCard = ({ post }) => {
 
 	const [comment, commentHandler, setComment] = useInput('');
 
+	const liked = post.Likers.find((v) => v.id === me?.id);
+	const saved = post.Savers.find((v) => v.id === me?.id);
+
+	const isFollowings = me?.Followings.find((v) => v.id === post.User.id);
+
 	const onSubmitComment = useCallback(
 		(e) => {
 			e.preventDefault();
+			if (!me) {
+				return alert('로그인이 필요합니다.');
+			}
+			if (!comment) {
+				return alert('댓글을 입력해 주세요');
+			}
+
 			dispatch({
 				type: ADD_COMMENT_REQUEST,
 				data: {
-					userId: me.id,
+					userId: me?.id,
 					postId: post.id,
 					content: comment,
 				},
@@ -66,7 +82,7 @@ const PostCard = ({ post }) => {
 		if (!me) {
 			return alert('로그인이 필요합니다.');
 		}
-		if (post.User.id !== me.id) {
+		if (post.User.id !== me?.id) {
 			return alert('내 게시물이 아닙니다.');
 		}
 
@@ -92,8 +108,6 @@ const PostCard = ({ post }) => {
 		});
 	}, [me]);
 
-	const liked = post.Likers.find((v) => v.id === me?.id);
-
 	const onSave = useCallback(() => {
 		if (!me) return alert('로그인 후 사용가능합니다.');
 
@@ -112,28 +126,49 @@ const PostCard = ({ post }) => {
 		});
 	}, [me]);
 
-	const saved = post.Savers.find((v) => v.id === me?.id);
+	const onClickFollowBtn = useCallback(() => {
+		if (!me) return alert('로그인 후 사용가능합니다.');
+
+		if (isFollowings) {
+			dispatch({
+				type: UNFOLLOW_REQUEST,
+				data: post.User.id,
+			});
+		} else {
+			dispatch({
+				type: FOLLOW_REQUEST,
+				data: post.User.id,
+			});
+		}
+	}, [isFollowings]);
 
 	return (
 		<PostCardWrapper>
 			<PostCardHead>
-				<button>팔로우</button>
+				{post.User.id !== me?.id && (
+					<button onClick={onClickFollowBtn}>
+						{isFollowings ? <RiUserFollowLine /> : '팔로우'}
+					</button>
+				)}
 			</PostCardHead>
 			{post.Images[0] && <PostImage images={post.Images} />}
 			<PostCardBody>
 				<BodyMeta>
 					<div>
-						<Link href={`/${post.User.nickname}`}>
-							<a>
-								<Avatar>{post.User.nickname}</Avatar>
-							</a>
-						</Link>
+						<Avatar profileImg={post.User.profileImg} nickname={post.User.nickname}>
+							{post.User.nickname}
+						</Avatar>
 					</div>
 					<MetaDetail>
-						<MetaDetailTitle>{post.User.nickname}</MetaDetailTitle>
+						<MetaDetailTitle>
+							<Link href={`/${post.User.nickname}`}>
+								<span>{post.User.nickname}</span>
+							</Link>
+						</MetaDetailTitle>
 						<MetaDetailDescription>
 							<HashTag content={post.content} />
 						</MetaDetailDescription>
+						<TimeWrapper>{useTimeForToday(post.createdAt)}</TimeWrapper>
 					</MetaDetail>
 				</BodyMeta>
 			</PostCardBody>
@@ -199,9 +234,9 @@ const PostCard = ({ post }) => {
 									<span>
 										<span>{v.User.nickname}</span>
 									</span>
-									<span>
+									<div>
 										<HashTag content={v.content} />
-									</span>
+									</div>
 								</div>
 							))}
 						</CommentsList>
@@ -212,4 +247,4 @@ const PostCard = ({ post }) => {
 	);
 };
 
-export default PostCard;
+export default React.memo(PostCard);
