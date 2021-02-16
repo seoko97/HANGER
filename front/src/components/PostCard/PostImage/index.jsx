@@ -6,8 +6,9 @@ const PostImageWrapper = styled.div`
 	display: flex !important;
 	align-items: center;
 	justify-content: center;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #e8e8e8;
 	overflow: hidden;
+	background-color: #fff;
 
 	& > img {
 		max-height: 637px;
@@ -34,6 +35,13 @@ const StyledSlick = styled(Slider)`
 		align-items: center;
 		justify-content: center;
 		background-color: #f7f7f7;
+	}
+	.slick-dots {
+		bottom: 10px;
+		& > li {
+			width: 10px;
+			height: 10px;
+		}
 	}
 `;
 
@@ -70,4 +78,4 @@ const PostImage = ({ images }) => {
 	}
 };
 
-export default PostImage;
+export default React.memo(PostImage);

@@ -16,7 +16,7 @@ const Like = () => {
 				data: { nickname: userInfo.nickname },
 			});
 		}
-	}, [unLikePostDone !== 'undefined' && unLikePostDone]);
+	}, [unLikePostDone]);
 
 	return (
 		<>
@@ -29,4 +29,4 @@ const Like = () => {
 	);
 };
 
-export default Like;
+export default React.memo(Like);

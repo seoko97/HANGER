@@ -5,6 +5,7 @@ import UserProfileForm from '../../../UserProfileForm';
 
 const Profile = () => {
 	const { mainPosts } = useSelector((state) => state.post);
+
 	return (
 		<>
 			<UserProfileForm postType="mainPost">
@@ -16,4 +17,4 @@ const Profile = () => {
 	);
 };
 
-export default Profile;
+export default React.memo(Profile);

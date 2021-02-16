@@ -17,11 +17,17 @@ const Save = () => {
 				data: { nickname: userInfo.nickname },
 			});
 		}
-	}, [unSavePostDone !== 'undefined' && unSavePostDone]);
+	}, [unSavePostDone]);
+
+	useEffect(() => {
+		if (userInfo?.id !== me?.id) {
+			return Router.push('/');
+		}
+	}, []);
 
 	return (
 		<>
-			{me && (
+			{userInfo?.id === me?.id && (
 				<UserProfileForm postType="saved">
 					{mainPosts.map((c) => (
 						<PostCard key={c.id} post={c} />
@@ -32,4 +38,4 @@ const Save = () => {
 	);
 };
 
-export default Save;
+export default React.memo(Save);
