@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadInner } from '../../AppLayOut/Header/MobileHeaderForm';
 import Loader from '../../UI/Loader';
 import useWindowSize from '../../../hooks/useWindowSize';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../../reducers/post';
 import NoticeForm from './NoticeForm';
 import PostCard from '../../PostCard';
 import PostForm from '../../PostForm';
-import { HomeWrapper, LeftForm, LoadInner, RightForm } from './style';
+import { HomeWrapper, LeftForm, RightForm } from './style';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
 	const { me } = useSelector((state) => state.user);
@@ -48,6 +50,32 @@ const Home = () => {
 
 	return (
 		<>
+			<Helmet
+				title={`HANGER`}
+				description={'나의 일상을 공유하세요'}
+				meta={[
+					{
+						name: 'description',
+						content: '나의 일상을 공유하세요',
+					},
+					{
+						property: 'og:title',
+						content: `HANGER`,
+					},
+					{
+						property: 'og:description',
+						content: '나의 일상을 공유하세요',
+					},
+					{
+						property: 'og:image',
+						content: '/logo.png',
+					},
+					{
+						property: 'og:url',
+						content: `http://localhost:3060`,
+					},
+				]}
+			/>
 			<HomeWrapper ref={homeRef}>
 				<LeftForm ref={componentRef}>
 					{me && <PostForm />}
