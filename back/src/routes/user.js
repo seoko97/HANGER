@@ -6,7 +6,7 @@ const { Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
-const { User, Post, Notice } = require('../models');
+const { User, Post, Notice } = require('../../models');
 
 const router = express.Router();
 

@@ -12,7 +12,7 @@ const postRouter = require('./src/routes/post');
 const postsRouter = require('./src/routes/posts');
 const searchRouter = require('./src/routes/search');
 const tagRouter = require('./src/routes/tag');
-const db = require('./src/models');
+const db = require('./models');
 const passportConfig = require('./src/passport');
 
 dotenv.config();

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { Post, Image, User, Hashtag, Comment, Notice } = require('../models');
+const { Post, Image, User, Hashtag, Comment, Notice } = require('../../models');
 
 const router = express.Router();
 

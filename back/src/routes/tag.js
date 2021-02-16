@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const { Post, Image, User, Comment, Hashtag } = require('../models');
+const { Post, Image, User, Comment, Hashtag } = require('../../models');
 
 const router = express.Router();
 

@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const multerS3 = require('multer-s3');
 
-const { Post, Image, User, Hashtag, Comment, Notice } = require('../models');
+const { Post, Image, User, Hashtag, Comment, Notice } = require('../../models');
 
 const router = express.Router();
 

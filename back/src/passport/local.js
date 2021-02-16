@@ -1,7 +1,7 @@
 const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const { User } = require('../../models');
 
 // 로그인 전략 생성
 module.exports = () => {
