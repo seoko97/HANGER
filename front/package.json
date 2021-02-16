@@ -20,6 +20,7 @@
     "next": "10.0.4",
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^6.0.2",
+    "pm2": "^4.5.4",
     "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "^17.0.1",
