@@ -42,6 +42,8 @@ const PostForm = () => {
 				return alert('게시글을 작성하세요.');
 			}
 
+			setText(text.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+
 			const formData = new FormData();
 			imagesPath.forEach((f) => {
 				formData.append('image', f);
@@ -79,11 +81,7 @@ const PostForm = () => {
 		<PostFormWrapper>
 			<PostFormInner>
 				<div>
-					<Avatar>
-						<span>
-							<span>지</span>
-						</span>
-					</Avatar>
+					<Avatar profileImg={me?.profileImg} />
 				</div>
 				<div onClick={openModal}>{me.nickname}님, 무슨 생각을 하고 계신가요?</div>
 			</PostFormInner>
@@ -99,11 +97,14 @@ const PostForm = () => {
 						submit={addPost}
 					>
 						<AvataWrapper>
-							<Avatar>{me.firstName}</Avatar>
+							<Avatar profileImg={me?.profileImg}>{me.firstName}</Avatar>
 							<span>{me.nickname}</span>
 						</AvataWrapper>
 						<TextBox>
 							<TextareaAutosize
+								wrap="hard"
+								rows="2"
+								cols="20"
 								placeholder={`${me.nickname}님, 무슨 생각을 하고 계신가요?`}
 								value={text}
 								onChange={texthandler}
@@ -132,4 +133,4 @@ const PostForm = () => {
 	);
 };
 
-export default PostForm;
+export default React.memo(PostForm);
