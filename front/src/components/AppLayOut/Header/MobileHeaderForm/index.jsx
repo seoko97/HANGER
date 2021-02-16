@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { RiSearchLine, RiSearchFill } from 'react-icons/ri';
 import { IconWrapepr, SearchForm, SearchFormWrapper } from './style';
@@ -32,6 +32,7 @@ export const NoticeForm = styled.div`
 	align-items: center;
 	min-height: 100vh;
 	max-height: 100vh;
+	overscroll-behavior: contain;
 	overflow: scroll;
 	& > div:first-child {
 		width: 100%;

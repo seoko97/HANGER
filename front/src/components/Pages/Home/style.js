@@ -38,13 +38,3 @@ export const HomeWrapper = styled.div`
 	width: 100%;
 	margin: 0 auto;
 `;
-
-export const LoadInner = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	& > div {
-		position: relative;
-		right: 0;
-	}
-`;

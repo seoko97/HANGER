@@ -65,4 +65,4 @@ const SearchListComponent = ({ searchText }) => {
 	);
 };
 
-export default SearchListComponent;
+export default React.memo(SearchListComponent);
