@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import useInput from '../../../hooks/useInput';
 import styled from 'styled-components';
 import { RiCloseCircleFill } from 'react-icons/ri';
 
@@ -36,6 +35,7 @@ const ModalInner = styled.form`
 	background-color: #fff;
 	border-radius: 1rem;
 	width: 500px;
+
 	display: flex;
 	flex-direction: column;
 	top: 50%;
@@ -45,6 +45,48 @@ const ModalInner = styled.form`
 
 	@media (max-width: ${({ theme }) => theme.deviceSizes.MOBILE}) {
 		width: 90%;
+		max-height: 90vh;
+	}
+
+	animation: fadein 0.3s;
+	-moz-animation: fadein 0.3s; /* Firefox */
+	-webkit-animation: fadein 0.3s; /* Safari and Chrome */
+	-o-animation: fadein 0.3s; /* Opera */
+
+	@keyframes fadein {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-moz-keyframes fadein {
+		/* Firefox */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-webkit-keyframes fadein {
+		/* Safari and Chrome */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@-o-keyframes fadein {
+		/* Opera */
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 `;
 
@@ -52,7 +94,6 @@ const CloseBox = styled(RiCloseCircleFill)`
 	position: absolute;
 	top: 8px;
 	right: 14px;
-	background-color: #f2f3f5;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -62,7 +103,7 @@ const CloseBox = styled(RiCloseCircleFill)`
 
 	&:hover {
 		transition-duration: 0.2s;
-		background-color: gray;
+		color: #40a9ff;
 	}
 `;
 
@@ -112,4 +153,4 @@ const Modal = ({ children, submit, setModal, maskClosable, closable, visible, ti
 	);
 };
 
-export default Modal;
+export default React.memo(Modal);
