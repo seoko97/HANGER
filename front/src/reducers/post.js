@@ -8,6 +8,10 @@ export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
 
+export const LOAD_SINGLE_POST_REQUEST = 'LOAD_SINGLE_POST_REQUEST';
+export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_SINGLE_POST_SUCCESS';
+export const LOAD_SINGLE_POST_FAILURE = 'LOAD_SINGLE_POST_FAILURE';
+
 export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
 export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
 export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
@@ -19,6 +23,10 @@ export const LOAD_USER_LIKE_POSTS_FAILURE = 'LOAD_USER_LIKE_POSTS_FAILURE';
 export const LOAD_USER_SAVE_POSTS_REQUEST = 'LOAD_USER_SAVE_POSTS_REQUEST';
 export const LOAD_USER_SAVE_POSTS_SUCCESS = 'LOAD_USER_SAVE_POSTS_SUCCESS';
 export const LOAD_USER_SAVE_POSTS_FAILURE = 'LOAD_USER_SAVE_POSTS_FAILURE';
+
+export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
+export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
+export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -87,9 +95,9 @@ export const initialState = {
 	savePostDone: false,
 	savePostError: null,
 
-	UnSavePostLoading: false, // 포스트 저장하기 취소
-	UnSavePostDone: false,
-	UnSavePostError: null,
+	unSavePostLoading: false, // 포스트 저장하기 취소
+	unSavePostDone: false,
+	unSavePostError: null,
 };
 
 const reducer = (state = initialState, action) =>
@@ -118,39 +126,34 @@ const reducer = (state = initialState, action) =>
 				break;
 
 			// 포스트 불러오기
+			case LOAD_SINGLE_POST_REQUEST:
 			case LOAD_MAIN_POSTS_REQUEST:
+			case LOAD_USER_POSTS_REQUEST:
+			case LOAD_USER_LIKE_POSTS_REQUEST:
+			case LOAD_USER_SAVE_POSTS_REQUEST:
+			case LOAD_HASHTAG_POSTS_REQUEST:
 				draft.loadPostsLoading = true;
 				draft.loadPostsError = null;
 				draft.loadPostsDone = false;
 				break;
 			case LOAD_MAIN_POSTS_SUCCESS:
-				draft.loadPostsLoading = false;
-				draft.loadPostsDone = true;
-				draft.mainPosts = action.data.concat(draft.mainPosts);
-				break;
-			case LOAD_MAIN_POSTS_FAILURE:
-				draft.loadPostsLoading = false;
-				draft.loadPostsError = action.error;
-				break;
-
-			case LOAD_USER_POSTS_REQUEST:
-			case LOAD_USER_LIKE_POSTS_REQUEST:
-			case LOAD_USER_SAVE_POSTS_REQUEST:
-				draft.loadPostsLoading = true;
-				draft.loadPostsError = null;
-				draft.loadPostsDone = false;
-				draft.mainPosts = [];
-				break;
+			case LOAD_SINGLE_POST_SUCCESS:
 			case LOAD_USER_POSTS_SUCCESS:
 			case LOAD_USER_LIKE_POSTS_SUCCESS:
 			case LOAD_USER_SAVE_POSTS_SUCCESS:
+			case LOAD_HASHTAG_POSTS_SUCCESS:
 				draft.loadPostsLoading = false;
 				draft.loadPostsDone = true;
-				draft.mainPosts = action.data.concat(draft.mainPosts);
+				draft.mainPosts = draft.mainPosts.concat(action.data);
+				draft.hasMorePosts = action.data.length === 10;
 				break;
+			case LOAD_USER_POSTS_FAILURE:
+			case LOAD_MAIN_POSTS_FAILURE:
+			case LOAD_SINGLE_POST_FAILURE:
 			case LOAD_USER_POSTS_FAILURE:
 			case LOAD_USER_LIKE_POSTS_FAILURE:
 			case LOAD_USER_SAVE_POSTS_FAILURE:
+			case LOAD_HASHTAG_POSTS_FAILURE:
 				draft.loadPostsLoading = false;
 				draft.loadPostsError = action.error;
 				break;
@@ -210,7 +213,7 @@ const reducer = (state = initialState, action) =>
 
 			// 저장하기 취소
 			case UNSAVE_POST_REQUEST:
-				draft.UnSavePostLoading = true;
+				draft.unSavePostLoading = true;
 				draft.unSavePostError = null;
 				draft.unSavePostDone = false;
 				break;

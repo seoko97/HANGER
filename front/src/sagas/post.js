@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import {
 	ADD_COMMENT_FAILURE,
 	ADD_COMMENT_REQUEST,
@@ -37,6 +37,9 @@ import {
 	LOAD_USER_LIKE_POSTS_SUCCESS,
 	LOAD_USER_LIKE_POSTS_FAILURE,
 	LOAD_USER_LIKE_POSTS_REQUEST,
+	LOAD_SINGLE_POST_FAILURE,
+	LOAD_SINGLE_POST_REQUEST,
+	LOAD_SINGLE_POST_SUCCESS,
 } from '../reducers/post';
 
 function loadPostsAPI(lastId) {
@@ -47,15 +50,16 @@ function* loadPosts(action) {
 	try {
 		const result = yield call(loadPostsAPI, action.lastId);
 
+		yield delay(300);
+
 		yield put({
 			type: LOAD_MAIN_POSTS_SUCCESS,
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: LOAD_MAIN_POSTS_FAILURE,
-			error: err.response,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -73,10 +77,9 @@ function* addComment(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: ADD_COMMENT_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -94,10 +97,9 @@ function* addPost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: ADD_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -115,10 +117,9 @@ function* upLoadImages(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: UPLOAD_IMAGES_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -136,10 +137,9 @@ function* removePost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: REMOVE_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -157,10 +157,9 @@ function* likePost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: LIKE_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -178,10 +177,9 @@ function* unLikePost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: UNLIKE_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -199,10 +197,9 @@ function* savePost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: SAVE_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
@@ -220,75 +217,101 @@ function* unSavePost(action) {
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: UNSAVE_POST_FAILURE,
-			error: err.response.data,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
 
 function loadUserPostsAPI(data) {
-	return axios.get(`/posts/${data}`);
+	return axios.get(`/posts/${data.nickname}?lastId=${data.lastId || 0}`);
 }
 
 function* loadUserPosts(action) {
 	try {
-		const result = yield call(loadUserPostsAPI, action.data.nickname);
+		const result = yield call(loadUserPostsAPI, action.data);
+
+		yield delay(300);
 
 		yield put({
 			type: LOAD_USER_POSTS_SUCCESS,
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: LOAD_USER_POSTS_FAILURE,
-			error: err.response,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
 
 function loadUserSavePostsAPI(data) {
-	return axios.get(`/posts/${data}/saved`);
+	return axios.get(`/posts/${data.nickname}/saved?lastId=${data.lastId || 0}`);
 }
 
 function* loadUserSavePosts(action) {
 	try {
-		const result = yield call(loadUserSavePostsAPI, action.data.nickname);
+		const result = yield call(loadUserSavePostsAPI, action.data);
+
+		yield delay(300);
 
 		yield put({
 			type: LOAD_USER_SAVE_POSTS_SUCCESS,
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: LOAD_USER_SAVE_POSTS_FAILURE,
-			error: err.response,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
 }
 
 function loadUserLikePostsAPI(data) {
-	return axios.get(`/posts/${data}/like`);
+	return axios.get(`/posts/${data.nickname}/like?lastId=${data.lastId || 0}`);
 }
 
 function* loadUserLikePosts(action) {
 	try {
-		const result = yield call(loadUserLikePostsAPI, action.data.nickname);
+		const result = yield call(loadUserLikePostsAPI, action.data);
+
+		yield delay(300);
 
 		yield put({
 			type: LOAD_USER_LIKE_POSTS_SUCCESS,
 			data: result.data,
 		});
 	} catch (err) {
-		console.error(err);
 		yield put({
 			type: LOAD_USER_LIKE_POSTS_FAILURE,
-			error: err.response,
+			error: err.response?.data ? err.response.data : err,
 		});
 	}
+}
+
+function loadSinglePostAPI(data) {
+	return axios.get(`/post/singlePost/${data}`);
+}
+
+function* loadSinglePost(action) {
+	try {
+		const result = yield call(loadSinglePostAPI, action.data.id);
+
+		yield put({
+			type: LOAD_SINGLE_POST_SUCCESS,
+			data: result.data,
+		});
+	} catch (err) {
+		yield put({
+			type: LOAD_SINGLE_POST_FAILURE,
+			error: err.response?.data ? err.response.data : err,
+		});
+	}
+}
+
+function* watchLoadSinglePost() {
+	yield takeLatest(LOAD_SINGLE_POST_REQUEST, loadSinglePost);
 }
 
 function* watchLoadUserLikePosts() {
@@ -353,5 +376,6 @@ export default function* postSaga() {
 		fork(watchLoadUserPosts),
 		fork(watchLoadUserSavePosts),
 		fork(watchLoadUserLikePosts),
+		fork(watchLoadSinglePost),
 	]);
 }
