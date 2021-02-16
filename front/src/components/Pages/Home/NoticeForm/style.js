@@ -37,6 +37,12 @@ export const NoticeHeader = styled.div`
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		&:first-child {
+			border-top-left-radius: 5px;
+		}
+		&:last-child {
+			border-top-right-radius: 5px;
+		}
 
 		& > div {
 			width: 100%;
@@ -51,6 +57,7 @@ export const NoticeHeader = styled.div`
 
 		&.click {
 			color: #40a9ff;
+
 			background-color: #f5f5f5;
 		}
 
