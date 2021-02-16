@@ -1,16 +1,20 @@
 {
-  "name": "front",
-  "version": "0.1.0",
-  "private": true,
+  "name": "hanger-front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "SeokHo",
+  "license": "ISC",
   "scripts": {
     "dev": "next -p 3060",
-    "build": "next build",
-    "start": "next start"
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build",
+    "prestart": "npm run build",
+    "start": "cross-env NODE_ENV=production next start -p 3060"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^10.0.5",
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
+    "cross-env": "^7.0.3",
     "faker": "^5.1.0",
     "immer": "^8.0.0",
     "next": "10.0.4",
