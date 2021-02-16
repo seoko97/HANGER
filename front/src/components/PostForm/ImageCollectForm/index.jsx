@@ -24,9 +24,6 @@ const ImageCollectForm = ({ images }) => {
 					<div key={v + i}>
 						<div>
 							<img src={`http://localhost:3065/${v}`} alt={v} />
-							{/* {images.length >= 4 && images.length - 1 == i && (
-								<span> + {images.length - 3} 개의 사진</span>
-							)} */}
 							<RiCloseCircleFill onClick={onClickRemoveImage(i)} />
 						</div>
 					</div>
@@ -36,4 +33,4 @@ const ImageCollectForm = ({ images }) => {
 	);
 };
 
-export default ImageCollectForm;
+export default React.memo(ImageCollectForm);
