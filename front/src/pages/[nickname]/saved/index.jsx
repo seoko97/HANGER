@@ -27,6 +27,5 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
 
 	context.store.dispatch(END);
 
-	// api 호출
 	await context.store.sagaTask.toPromise();
 });
