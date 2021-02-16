@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import React from 'react';
 import { FaUserAlt } from 'react-icons/fa';
+import Link from 'next/link';
 
 export const AvatarWrapper = styled.div`
 	display: flex;
@@ -44,39 +45,80 @@ export const AvatarWrapper = styled.div`
 		position: relative;
 		display: flex;
 		align-items: flex-end;
+		align-items: center;
 		justify-content: center;
 		background-color: #ccc;
 		overflow: hidden;
 		border-radius: 50%;
 		color: white;
 		& > span {
+			width: 100%;
+			height: 100%;
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-end;
 			transform: scale(1) translateX(-50%);
 
 			position: absolute;
+			overflow: hidden;
 			left: 50%;
 			transform-origin: 0 center;
+			& > img {
+				width: 100%;
+				height: 100%;
+			}
+			& > svg {
+				position: absolute;
+				width: 100%;
+				height: 70%;
+				bottom: 0;
+			}
 		}
 	}
 `;
 
-const AvatarForm = ({ size, borderGradient, profileImg }) => {
+const AvatarForm = ({ size, borderGradient, profileImg, nickname, develop }) => {
 	return (
 		<>
-			<AvatarWrapper size={size} borderGradient={borderGradient} className="avatar">
-				<span>
+			{develop ? (
+				<AvatarWrapper size={size} borderGradient={borderGradient} className="avatar">
 					<span>
-						{profileImg ? (
-							<img src={profileImg} />
-						) : (
-							<FaUserAlt size={size ? size - 12 : 22} />
-						)}
+						<span>
+							<img src={`${profileImg}`} alt={profileImg} />
+						</span>
 					</span>
-				</span>
-			</AvatarWrapper>
+				</AvatarWrapper>
+			) : nickname ? (
+				<Link href={`/${nickname}`}>
+					<AvatarWrapper size={size} borderGradient={borderGradient} className="avatar">
+						<span>
+							<span>
+								{profileImg ? (
+									<img
+										src={`http://localhost:3065/${profileImg}`}
+										alt={profileImg}
+									/>
+								) : (
+									<FaUserAlt size={size ? size - 12 : 22} />
+								)}
+							</span>
+						</span>
+					</AvatarWrapper>
+				</Link>
+			) : (
+				<AvatarWrapper size={size} borderGradient={borderGradient} className="avatar">
+					<span>
+						<span>
+							{profileImg ? (
+								<img src={`http://localhost:3065/${profileImg}`} alt={profileImg} />
+							) : (
+								<FaUserAlt size={size ? size - 12 : 22} />
+							)}
+						</span>
+					</span>
+				</AvatarWrapper>
+			)}
 		</>
 	);
 };
-export default AvatarForm;
+export default React.memo(AvatarForm);
