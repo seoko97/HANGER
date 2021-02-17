@@ -6,7 +6,7 @@ module.exports = class Image extends Model {
 		return super.init(
 			{
 				src: {
-					type: DataTypes.TINYINT,
+					type: DataTypes.STRING(200),
 					allowNull: false,
 				},
 			},
