@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
 const { Post, Image, User, Hashtag, Comment, Notice } = require('../../models');
@@ -14,16 +15,18 @@ try {
 	fs.mkdirSync('uploads');
 }
 
-const upload = multer({
-	storage: multer.diskStorage({
-		destination(req, file, done) {
-			done(null, 'uploads');
-		},
-		filename(req, file, done) {
-			const ext = path.extname(file.originalname); // 확장자 추출
-			const basename = path.basename(file.originalname, ext);
+AWS.config.update({
+	region: 'ap-northeast-2',
+	accessKeyId: process.env.S3_ACCESS_KEY_ID,
+	secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+});
 
-			done(null, basename + '_' + new Date().getTime() + ext); // 추출한 확장자와 파일이름을 합침
+const upload = multer({
+	storage: multerS3({
+		s3: new AWS.S3(),
+		bucket: 'hangerbukit',
+		key(req, file, cd) {
+			cd(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
 		},
 	}),
 	// 파일 사이지 지정 (20mb)
@@ -101,7 +104,7 @@ router.post('/', upload.none(), async (req, res, next) => {
 });
 
 router.post('/images', upload.array('image'), async (req, res, next) => {
-	return res.json(req.files.map((v) => v.filename));
+	return res.json(req.files.map((v) => v.location));
 });
 
 router.post('/:postId/comment', async (req, res, next) => {
