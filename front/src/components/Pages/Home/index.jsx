@@ -72,7 +72,7 @@ const Home = () => {
 					},
 					{
 						property: 'og:url',
-						content: `http://localhost:3060`,
+						content: `http://hangerncloset.com`,
 					},
 				]}
 			/>
