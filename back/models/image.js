@@ -1,14 +1,12 @@
 const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class Image extends (
-	Model
-) {
+module.exports = class Image extends Model {
 	static init(sequelize) {
 		return super.init(
 			{
 				src: {
-					type: DataTypes.STRING(200),
+					type: DataTypes.TEXT,
 					allowNull: false,
 				},
 			},

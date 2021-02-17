@@ -2,9 +2,7 @@ const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
 // 일반 알림
-module.exports = class Notice extends (
-	Model
-) {
+module.exports = class Notice extends Model {
 	static init(sequelize) {
 		return super.init(
 			{
