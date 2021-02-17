@@ -7,6 +7,8 @@ import { ImagesBox } from './style';
 const ImageCollectForm = ({ images }) => {
 	const dispatch = useDispatch();
 
+	console.log(images);
+
 	const onClickRemoveImage = useCallback(
 		(i) => () => {
 			dispatch({
@@ -23,7 +25,7 @@ const ImageCollectForm = ({ images }) => {
 				{images.map((v, i) => (
 					<div key={v + i}>
 						<div>
-							<img src={v} alt={v} />
+							<img src={`${v}`} alt={v} />
 							<RiCloseCircleFill onClick={onClickRemoveImage(i)} />
 						</div>
 					</div>
