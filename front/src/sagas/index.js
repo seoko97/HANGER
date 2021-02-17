@@ -5,7 +5,9 @@ import userSaga from './user';
 import postSaga from './post';
 import searchSaga from './search';
 import tagSaga from './tag';
-import { backUrl } from '../config/config';
+
+const backUrl =
+	process.env.NODE_ENV === 'production' ? 'http://api.nodebird.com' : 'http://localhost:3065';
 
 axios.defaults.baseURL = backUrl;
 axios.defaults.withCredentials = true;
