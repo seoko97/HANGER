@@ -22,7 +22,6 @@ import {
 	TextArea,
 	TextareaForm,
 } from './style';
-import { backUrl } from '../../../../config/config';
 
 const Edit = () => {
 	const { me, userProfileImg } = useSelector((state) => state.user);
@@ -92,13 +91,7 @@ const Edit = () => {
 						<AvatarForm>
 							<div>
 								{userProfileImg || me?.profileImg ? (
-									<img
-										src={
-											userProfileImg
-												? `${backUrl}/${userProfileImg}`
-												: `${backUrl}/${me?.profileImg}`
-										}
-									/>
+									<img src={userProfileImg ? userProfileImg : me?.profileImg} />
 								) : (
 									<FaUserAlt />
 								)}

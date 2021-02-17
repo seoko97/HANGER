@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { backUrl } from '../../../config/config';
 
 const PostImageWrapper = styled.div`
 	display: flex !important;
@@ -59,7 +58,7 @@ const PostImage = ({ images }) => {
 	if (images.length == 1) {
 		return (
 			<PostImageWrapper>
-				<img src={`${backUrl}/${images[0].src}`} key={images[0].src + images[0].id} />
+				<img src={images[0].src} key={images[0].src + images[0].id} />
 			</PostImageWrapper>
 		);
 	}
@@ -68,7 +67,7 @@ const PostImage = ({ images }) => {
 			<StyledSlick {...settings}>
 				{images.map((v, i) => (
 					<PostImageWrapper key={v.src + i + v.id}>
-						<img src={`${backUrl}/${v.src}`} />
+						<img src={`${v.src}`} />
 					</PostImageWrapper>
 				))}
 			</StyledSlick>

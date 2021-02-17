@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import PostCard from '../../PostCard';
-import { backUrl } from '../../../config/config';
 
 const TagPageHeader = styled.div`
 	width: 100%;
