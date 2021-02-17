@@ -22,6 +22,7 @@ import {
 	TextArea,
 	TextareaForm,
 } from './style';
+import { backUrl } from '../../../../config/config';
 
 const Edit = () => {
 	const { me, userProfileImg } = useSelector((state) => state.user);
@@ -94,8 +95,8 @@ const Edit = () => {
 									<img
 										src={
 											userProfileImg
-												? `http://localhost:3065/${userProfileImg}`
-												: `http://localhost:3065/${me?.profileImg}`
+												? `${backUrl}/${userProfileImg}`
+												: `${backUrl}/${me?.profileImg}`
 										}
 									/>
 								) : (

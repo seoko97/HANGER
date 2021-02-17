@@ -3,6 +3,7 @@ import { RiCloseCircleFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { REMOVE_IMAGE } from '../../../reducers/post';
 import { ImagesBox } from './style';
+import { backUrl } from '../../../config/config';
 
 const ImageCollectForm = ({ images }) => {
 	const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ImageCollectForm = ({ images }) => {
 				{images.map((v, i) => (
 					<div key={v + i}>
 						<div>
-							<img src={`http://localhost:3065/${v}`} alt={v} />
+							<img src={`${backUrl}/${v}`} alt={v} />
 							<RiCloseCircleFill onClick={onClickRemoveImage(i)} />
 						</div>
 					</div>

@@ -38,6 +38,7 @@ import {
 } from '../../reducers/post';
 import { LoadInner } from '../AppLayOut/Header/MobileHeaderForm';
 import Loader from '../UI/Loader';
+import { backUrl } from '../../config/config';
 
 const UserProfileForm = ({ children, postType }) => {
 	const { userInfo, me, loadUserInfoError } = useSelector((state) => state.user);
@@ -172,7 +173,7 @@ const UserProfileForm = ({ children, postType }) => {
 					{
 						property: 'og:image',
 						content: userInfo?.profileImg
-							? `http://localhost:3065/${userInfo?.profileImg}`
+							? `${backUrl}/${userInfo?.profileImg}`
 							: '/logo.png',
 					},
 					{

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import React from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import Link from 'next/link';
+import { backUrl } from '../../../config/config';
 
 export const AvatarWrapper = styled.div`
 	display: flex;
@@ -94,10 +95,7 @@ const AvatarForm = ({ size, borderGradient, profileImg, nickname, develop }) => 
 						<span>
 							<span>
 								{profileImg ? (
-									<img
-										src={`http://localhost:3065/${profileImg}`}
-										alt={profileImg}
-									/>
+									<img src={`${backUrl}/${profileImg}`} alt={profileImg} />
 								) : (
 									<FaUserAlt size={size ? size - 12 : 22} />
 								)}
@@ -110,7 +108,7 @@ const AvatarForm = ({ size, borderGradient, profileImg, nickname, develop }) => 
 					<span>
 						<span>
 							{profileImg ? (
-								<img src={`http://localhost:3065/${profileImg}`} alt={profileImg} />
+								<img src={`${backUrl}/${profileImg}`} alt={profileImg} />
 							) : (
 								<FaUserAlt size={size ? size - 12 : 22} />
 							)}

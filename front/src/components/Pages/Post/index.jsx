@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
 import styled from 'styled-components';
 import PostCard from '../../PostCard';
+import { backUrl } from '../../../config/config';
 
 const TagPageHeader = styled.div`
 	width: 100%;
@@ -93,7 +93,7 @@ const SinglePost = () => {
 						{
 							property: 'og:image',
 							content: mainPosts[0]?.Images[0]
-								? `http://localhost:3065/${mainPosts[0]?.Images[0].src}`
+								? `${backUrl}/${mainPosts[0]?.Images[0].src}`
 								: '/logo.png',
 						},
 						{
