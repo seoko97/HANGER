@@ -96,7 +96,7 @@ const AvatarForm = ({ size, borderGradient, profileImg, nickname, develop }) => 
 							<span>
 								{profileImg ? (
 									<img
-										src={`http://hangerncloset.com/${profileImg}`}
+										src={`http://localhost:3065/${profileImg}`}
 										alt={profileImg}
 									/>
 								) : (
@@ -111,10 +111,7 @@ const AvatarForm = ({ size, borderGradient, profileImg, nickname, develop }) => 
 					<span>
 						<span>
 							{profileImg ? (
-								<img
-									src={`http://hangerncloset.com/${profileImg}`}
-									alt={profileImg}
-								/>
+								<img src={`http://localhost:3065/${profileImg}`} alt={profileImg} />
 							) : (
 								<FaUserAlt size={size ? size - 12 : 22} />
 							)}

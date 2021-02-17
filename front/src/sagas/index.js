@@ -7,9 +7,7 @@ import searchSaga from './search';
 import tagSaga from './tag';
 import { backUrl } from '../config/config';
 
-console.log(backUrl);
-
-axios.defaults.baseURL = backUrl;
+axios.defaults.baseURL = 'http://localhost:3065';
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {

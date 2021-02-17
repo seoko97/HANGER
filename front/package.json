@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next -p 3060",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build",
-    "start:dev": "cross-env NODE_ENV=production next start -p 3060",
+    "start:dev": "next start -p 3060",
     "start:prod": "cross-env NODE_ENV=production next start -p 80"
 
   },

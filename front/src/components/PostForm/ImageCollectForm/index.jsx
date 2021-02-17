@@ -24,7 +24,7 @@ const ImageCollectForm = ({ images }) => {
 				{images.map((v, i) => (
 					<div key={v + i}>
 						<div>
-							<img src={`${backUrl}/${v}`} alt={v} />
+							<img src={`http://localhost:3065/${v}`} alt={v} />
 							<RiCloseCircleFill onClick={onClickRemoveImage(i)} />
 						</div>
 					</div>
