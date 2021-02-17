@@ -59,7 +59,10 @@ const PostImage = ({ images }) => {
 	if (images.length == 1) {
 		return (
 			<PostImageWrapper>
-				<img src={`${backUrl}/${images[0].src}`} key={images[0].src + images[0].id} />
+				<img
+					src={`http://hangerncloset.com/${images[0].src}`}
+					key={images[0].src + images[0].id}
+				/>
 			</PostImageWrapper>
 		);
 	}
@@ -68,7 +71,7 @@ const PostImage = ({ images }) => {
 			<StyledSlick {...settings}>
 				{images.map((v, i) => (
 					<PostImageWrapper key={v.src + i + v.id}>
-						<img src={`${backUrl}/${v.src}`} />
+						<img src={`http://hangerncloset.com/${v.src}`} />
 					</PostImageWrapper>
 				))}
 			</StyledSlick>

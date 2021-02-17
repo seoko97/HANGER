@@ -95,8 +95,8 @@ const Edit = () => {
 									<img
 										src={
 											userProfileImg
-												? `${backUrl}/${userProfileImg}`
-												: `${backUrl}/${me?.profileImg}`
+												? `http://hangerncloset.com/${userProfileImg}`
+												: `http://hangerncloset.com/${me?.profileImg}`
 										}
 									/>
 								) : (

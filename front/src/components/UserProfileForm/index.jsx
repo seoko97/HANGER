@@ -171,7 +171,7 @@ const UserProfileForm = ({ children, postType }) => {
 					{
 						property: 'og:image',
 						content: userInfo?.profileImg
-							? `${backUrl}/${userInfo?.profileImg}`
+							? `http://hangerncloset.com/${userInfo?.profileImg}`
 							: '/logo.png',
 					},
 					{

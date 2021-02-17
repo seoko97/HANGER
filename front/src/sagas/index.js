@@ -7,6 +7,8 @@ import searchSaga from './search';
 import tagSaga from './tag';
 import { backUrl } from '../config/config';
 
+console.log(backUrl);
+
 axios.defaults.baseURL = backUrl;
 axios.defaults.withCredentials = true;
 

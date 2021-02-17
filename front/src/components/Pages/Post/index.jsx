@@ -93,7 +93,7 @@ const SinglePost = () => {
 						{
 							property: 'og:image',
 							content: mainPosts[0]?.Images[0]
-								? `${backUrl}/${mainPosts[0]?.Images[0].src}`
+								? `http://hangerncloset.com/${mainPosts[0]?.Images[0].src}`
 								: '/logo.png',
 						},
 						{
