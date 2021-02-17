@@ -56,9 +56,11 @@ app.use(
 		saveUninitialized: false,
 		resave: false,
 		secret: process.env.COOKIE_SECRET,
+		proxy: process.env.NODE_ENV === 'production',
 		cookie: {
 			httpOnly: true,
-			secure: false, // https를 쓸 때 true
+			secure: process.env.NODE_ENV === 'production',
+			domain: process.env.NODE_ENV === 'production' && '.hangerncloset.com',
 		},
 	}),
 );
