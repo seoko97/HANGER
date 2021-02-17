@@ -43,9 +43,7 @@ import { backUrl } from '../../config/config';
 const UserProfileForm = ({ children, postType }) => {
 	const { userInfo, me, loadUserInfoError } = useSelector((state) => state.user);
 
-	const { mainPosts, hasMorePosts, loadPostsLoading, loadPostsError } = useSelector(
-		(state) => state.post,
-	);
+	const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
 	const [postMenu, setPostMenu] = useState(postType === 'mainPost' ? true : false);
 	const [saveMenu, setSaveMenu] = useState(postType === 'saved' ? true : false);
 	const [likeMenu, setLikeMenu] = useState(postType === 'liked' ? true : false);
@@ -178,7 +176,7 @@ const UserProfileForm = ({ children, postType }) => {
 					},
 					{
 						property: 'og:url',
-						content: `http://localhost:3060/${userInfo?.nickname}`,
+						content: `http://hangerncloset.com/${userInfo?.nickname}`,
 					},
 				]}
 			/>

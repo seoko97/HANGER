@@ -98,7 +98,7 @@ const SinglePost = () => {
 						},
 						{
 							property: 'og:url',
-							content: `http://localhost:3060/post/${mainPosts[0]?.id}`,
+							content: `http://hangerncloset.com/post/${mainPosts[0]?.id}`,
 						},
 					]}
 				/>
