@@ -6,8 +6,6 @@ const passport = require('passport');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const path = require('path');
-const hpp = require('hpp');
-const helmet = require('helmet');
 
 const userRouter = require('./src/routes/user');
 const postRouter = require('./src/routes/post');
@@ -27,26 +25,13 @@ db.sequelize
 	.catch(console.error);
 passportConfig();
 
-if (process.env.NODE_ENV === 'production') {
-	app.enable('trust proxy');
-	app.use(morgan('combined'));
-	app.use(hpp());
-	app.use(helmet({ contentSecurityPolicy: false }));
-	app.use(
-		cors({
-			origin: 'http://hangerncloset.com',
-			credentials: true,
-		}),
-	);
-} else {
-	app.use(morgan('dev'));
-	app.use(
-		cors({
-			origin: 'http://localhost:3060',
-			credentials: true,
-		}),
-	);
-}
+app.use(morgan('dev'));
+app.use(
+	cors({
+		origin: 'http://localhost:3060',
+		credentials: true,
+	}),
+);
 
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -57,11 +42,9 @@ app.use(
 		saveUninitialized: false,
 		resave: false,
 		secret: process.env.COOKIE_SECRET,
-		proxy: process.env.NODE_ENV === 'production',
 		cookie: {
 			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			domain: process.env.NODE_ENV === 'production' && '.hangerncloset.com',
+			secure: false, // https를 쓸 때 true
 		},
 	}),
 );
