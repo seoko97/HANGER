@@ -184,7 +184,6 @@ const reducer = (state = initialState, action) =>
 				draft.upLoadImagesDone = false;
 				break;
 			case UPLOAD_IMAGES_SUCCESS:
-				console.log(action.data);
 				action.data.forEach((image) => draft.imagesPath.unshift(image));
 				draft.upLoadImagesLoading = false;
 				draft.upLoadImagesDone = true;
