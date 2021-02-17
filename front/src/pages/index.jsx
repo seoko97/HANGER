@@ -11,8 +11,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
 
 	context.req && cookie && (axios.defaults.headers.Cookie = cookie);
 
-	console.log('메인페이지', context.req?.headers);
-
 	context.store.dispatch({
 		type: LOAD_MY_INFO_REQUEST,
 	});

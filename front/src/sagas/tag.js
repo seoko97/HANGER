@@ -14,8 +14,6 @@ function* loadHashtagPosts(action) {
 	try {
 		const result = yield call(loadHashtagPostsAPI, action.data);
 
-		yield delay(300);
-
 		yield put({
 			type: LOAD_HASHTAG_POSTS_SUCCESS,
 			data: result.data,

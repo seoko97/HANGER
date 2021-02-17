@@ -17,7 +17,7 @@ function* loadSearchInfo(action) {
 	try {
 		const result = yield call(loadSearchInfoAPI, action.data);
 
-		yield delay(300);
+		yield delay(100);
 		yield put({
 			type: LOAD_SEARCH_INFO_SUCCESS,
 			data: result.data,
@@ -38,7 +38,7 @@ function* loadSearchTagInfo(action) {
 	try {
 		const result = yield call(loadSearchTagInfoAPI, action.data);
 
-		yield delay(300);
+		yield delay(100);
 		yield put({
 			type: LOAD_SEARCH_TAG_INFO_SUCCESS,
 			data: result.data,

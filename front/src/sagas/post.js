@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import {
 	ADD_COMMENT_FAILURE,
 	ADD_COMMENT_REQUEST,
@@ -49,8 +49,6 @@ function loadPostsAPI(lastId) {
 function* loadPosts(action) {
 	try {
 		const result = yield call(loadPostsAPI, action.lastId);
-
-		yield delay(300);
 
 		yield put({
 			type: LOAD_MAIN_POSTS_SUCCESS,
@@ -232,8 +230,6 @@ function* loadUserPosts(action) {
 	try {
 		const result = yield call(loadUserPostsAPI, action.data);
 
-		yield delay(300);
-
 		yield put({
 			type: LOAD_USER_POSTS_SUCCESS,
 			data: result.data,
@@ -254,8 +250,6 @@ function* loadUserSavePosts(action) {
 	try {
 		const result = yield call(loadUserSavePostsAPI, action.data);
 
-		yield delay(300);
-
 		yield put({
 			type: LOAD_USER_SAVE_POSTS_SUCCESS,
 			data: result.data,
@@ -275,8 +269,6 @@ function loadUserLikePostsAPI(data) {
 function* loadUserLikePosts(action) {
 	try {
 		const result = yield call(loadUserLikePostsAPI, action.data);
-
-		yield delay(300);
 
 		yield put({
 			type: LOAD_USER_LIKE_POSTS_SUCCESS,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, delay, fork, put, takeLatest, throttle } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import {
 	CHANGE_USER_INFO_FAILURE,
 	CHANGE_USER_INFO_REQUEST,
@@ -271,8 +271,6 @@ function* loadUserNotice(action) {
 	try {
 		const result = yield call(loadUserNoticeAPI, action.lastId);
 
-		yield delay(800);
-
 		yield put({
 			type: LOAD_USER_NOTICE_SUCCESS,
 			data: result.data,
@@ -312,8 +310,6 @@ function loadUserMobileNoticeAPI(lastId) {
 function* loadUserMobileNotice(action) {
 	try {
 		const result = yield call(loadUserMobileNoticeAPI, action.lastId);
-
-		yield delay(1000);
 
 		yield put({
 			type: LOAD_NOTICE_LIST_SUCCESS,

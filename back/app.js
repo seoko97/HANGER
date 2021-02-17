@@ -28,7 +28,6 @@ db.sequelize
 passportConfig();
 
 if (process.env.NODE_ENV === 'production') {
-	console.log('개발환경입니다.', process.env.COOKIE_SECRET);
 	app.use(morgan('combined'));
 	app.use(hpp());
 	app.use(helmet({ contentSecurityPolicy: false }));
