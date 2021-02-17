@@ -5,6 +5,8 @@ const multer = require('multer');
 const { Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
 
 const { User, Post, Notice } = require('../../models');
 
@@ -16,19 +18,22 @@ try {
 	fs.mkdirSync('uploads');
 }
 
-const upload = multer({
-	storage: multer.diskStorage({
-		destination(req, file, done) {
-			done(null, 'uploads');
-		},
-		filename(req, file, done) {
-			const ext = path.extname(file.originalname); // 확장자 추출(.png)
-			const basename = path.basename(file.originalname, ext);
+AWS.config.update({
+	region: 'ap-northeast-2',
+	accessKeyId: process.env.S3_ACCESS_KEY_ID,
+	secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+});
 
-			done(null, basename + '_' + new Date().getTime() + ext);
+const upload = multer({
+	storage: multerS3({
+		s3: new AWS.S3(),
+		bucket: 'hangerbukit',
+		key(req, file, cd) {
+			cd(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
 		},
 	}),
-	limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+	// 파일 사이지 지정 (20mb)
+	limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.get('/', async (req, res, next) => {
@@ -270,7 +275,7 @@ router.patch('/:nickname/profileimg', upload.single('image'), async (req, res, n
 	if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
 	await User.update(
 		{
-			profileImg: req.file.filename,
+			profileImg: req.file.location,
 		},
 		{
 			where: {
