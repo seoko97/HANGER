@@ -92,7 +92,7 @@ const SinglePost = () => {
 						{
 							property: 'og:image',
 							content: mainPosts[0]?.Images[0]
-								? `http://api.hangerncloset.com/${mainPosts[0]?.Images[0].src}`
+								? `${mainPosts[0]?.Images[0].src}`
 								: '/logo.png',
 						},
 						{
