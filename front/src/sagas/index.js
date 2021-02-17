@@ -7,9 +7,11 @@ import searchSaga from './search';
 import tagSaga from './tag';
 
 const backUrl =
-	process.env.NODE_ENV === 'production' ? 'http://api.nodebird.com' : 'http://localhost:3065';
+	process.env.NODE_ENV === 'production'
+		? 'http://api.hangerncloset.com'
+		: 'http://localhost:3065';
 
-axios.defaults.baseURL = `${backUrl}/api`;
+axios.defaults.baseURL = backUrl;
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
