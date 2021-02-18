@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const path = require('path');
 const hpp = require('hpp');
 const helmet = require('helmet');
+let SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const userRouter = require('./src/routes/user');
 const postRouter = require('./src/routes/post');
@@ -56,6 +57,9 @@ app.use(
 		saveUninitialized: false,
 		resave: false,
 		secret: process.env.COOKIE_SECRET,
+		store: new SequelizeStore({
+			db: db.sequelize,
+		}),
 		name: 'hangernextjsreact',
 		cookie: {
 			httpOnly: true,
