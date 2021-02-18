@@ -173,7 +173,7 @@ const UserProfileForm = ({ children, postType }) => {
 					},
 					{
 						property: 'og:url',
-						content: `http://hangerncloset.com/${userInfo?.nickname}`,
+						content: `https://hangerncloset.com/${userInfo?.nickname}`,
 					},
 				]}
 			/>

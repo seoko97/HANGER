@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(helmet({ contentSecurityPolicy: false }));
 	app.use(
 		cors({
-			origin: 'http://hangerncloset.com',
+			origin: 'https://hangerncloset.com',
 			credentials: true,
 		}),
 	);

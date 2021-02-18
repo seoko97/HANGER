@@ -97,7 +97,7 @@ const SinglePost = () => {
 						},
 						{
 							property: 'og:url',
-							content: `http://hangerncloset.com/post/${mainPosts[0]?.id}`,
+							content: `https://hangerncloset.com/post/${mainPosts[0]?.id}`,
 						},
 					]}
 				/>
