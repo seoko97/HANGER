@@ -132,6 +132,7 @@ const reducer = (state = initialState, action) =>
 			case LOAD_USER_LIKE_POSTS_REQUEST:
 			case LOAD_USER_SAVE_POSTS_REQUEST:
 			case LOAD_HASHTAG_POSTS_REQUEST:
+				if (draft.unLikePostDone || draft.unSavePostDone) draft.mainPosts = [];
 				draft.loadPostsLoading = true;
 				draft.loadPostsError = null;
 				draft.loadPostsDone = false;

@@ -208,10 +208,13 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signout', (req, res) => {
-	// 로그아웃
 	req.logout();
-	req.session.destroy();
-	res.send('logout 성공');
+	if (req.session) {
+		req.session.destroy((e) => {
+			console.error(e);
+		});
+	}
+	res.send('logout success');
 });
 
 router.patch('/:nickname/edit', async (req, res, next) => {

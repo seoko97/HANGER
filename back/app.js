@@ -56,6 +56,7 @@ app.use(
 		saveUninitialized: false,
 		resave: false,
 		secret: process.env.COOKIE_SECRET,
+		name: 'hangernextjsreact',
 		cookie: {
 			httpOnly: true,
 			secure: false, // https 시 false
