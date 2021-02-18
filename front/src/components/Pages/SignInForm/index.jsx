@@ -46,6 +46,9 @@ const SignInForm = () => {
 		(e) => {
 			e.preventDefault();
 
+			if (!userId) return alert('아이디를 입력하세요.');
+			if (!password) return alert('비밀번호를 입력하세요.');
+
 			dispatch({
 				type: SIGN_IN_REQUEST,
 				data: {
