@@ -1,10 +1,11 @@
 const express = require('express');
 
 const { Post, Image, User, Hashtag, Comment, Notice } = require('../../models');
+const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-router.post('/:content', async (req, res, next) => {
+router.post('/:content', isLoggedIn, async (req, res, next) => {
 	try {
 		// 만약 유저 정보가 존재 한다면
 		if (req.user) {
@@ -57,7 +58,7 @@ router.post('/:content', async (req, res, next) => {
 	}
 });
 
-router.post('/:content/tag', async (req, res, next) => {
+router.post('/:content/tag', isLoggedIn, async (req, res, next) => {
 	try {
 		// 만약 유저 정보가 존재 한다면
 		if (req.user) {

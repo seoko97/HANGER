@@ -9,6 +9,7 @@ const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
 const { User, Post, Notice } = require('../../models');
+const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
@@ -116,7 +117,7 @@ router.get('/:nickname', async (req, res, next) => {
 	}
 });
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup', isNotLoggedIn, async (req, res, next) => {
 	// 회원가입 실행
 	try {
 		if (req.body.userId.length < 4) {
@@ -162,7 +163,7 @@ router.post('/signup', async (req, res, next) => {
 	}
 });
 
-router.post('/signin', (req, res, next) => {
+router.post('/signin', isNotLoggedIn, (req, res, next) => {
 	// 로그인 전략
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
@@ -207,19 +208,13 @@ router.post('/signin', (req, res, next) => {
 	})(req, res, next);
 });
 
-router.post('/signout', (req, res) => {
+router.post('/signout', isLoggedIn, (req, res) => {
 	req.logout();
 	req.session.destroy();
-	if (req.session) {
-		req.session.destroy((e) => {
-			console.error(e);
-		});
-	}
-	res.clearCookie('hangernextjsreact');
 	res.send('logout success');
 });
 
-router.patch('/:nickname/edit', async (req, res, next) => {
+router.patch('/:nickname/edit', isLoggedIn, async (req, res, next) => {
 	try {
 		const user = await User.findOne({
 			where: {
@@ -270,36 +265,45 @@ router.patch('/:nickname/edit', async (req, res, next) => {
 	}
 });
 
-router.patch('/:nickname/profileimg', upload.single('image'), async (req, res, next) => {
-	const user = await User.findOne({
-		where: {
-			nickname: req.params.nickname,
-		},
-	});
+router.patch(
+	'/:nickname/profileimg',
+	isLoggedIn,
+	upload.single('image'),
+	async (req, res, next) => {
+		try {
+			const user = await User.findOne({
+				where: {
+					nickname: req.params.nickname,
+				},
+			});
 
-	if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
-	await User.update(
-		{
-			profileImg: req.file.location,
-		},
-		{
-			where: {
-				nickname: req.body.nickname,
-			},
-		},
-	);
+			if (!user) return res.status(404).send('존재하지 않는 사용자입니다.');
+			await User.update(
+				{
+					profileImg: req.file.location,
+				},
+				{
+					where: {
+						nickname: req.body.nickname,
+					},
+				},
+			);
 
-	const userProfileImg = await User.findOne({
-		where: { nickname: req.params.nickname },
-		attributes: {
-			exclude: ['password'],
-		},
-	});
+			const userProfileImg = await User.findOne({
+				where: { nickname: req.params.nickname },
+				attributes: {
+					exclude: ['password'],
+				},
+			});
 
-	return res.status(200).send(userProfileImg.profileImg);
-});
+			return res.status(200).send(userProfileImg.profileImg);
+		} catch (error) {
+			console.error(error);
+		}
+	},
+);
 
-router.patch('/:userId/follow', async (req, res, next) => {
+router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
 	try {
 		if (!req.user) {
 			return res.status(403).send('로그인 후 사용가능합니다.');
@@ -330,7 +334,7 @@ router.patch('/:userId/follow', async (req, res, next) => {
 	}
 });
 
-router.delete('/:userId/follow', async (req, res, next) => {
+router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
 	try {
 		const user = await User.findOne({
 			where: { id: req.params.userId },
@@ -420,7 +424,7 @@ router.get('/:userId/followings', async (req, res, next) => {
 	}
 });
 
-router.post('/notice', async (req, res, next) => {
+router.post('/notice', isLoggedIn, async (req, res, next) => {
 	try {
 		if (req.user) {
 			const where = {};
@@ -454,7 +458,7 @@ router.post('/notice', async (req, res, next) => {
 	}
 });
 
-router.post('/followNotice', async (req, res, next) => {
+router.post('/followNotice', isLoggedIn, async (req, res, next) => {
 	try {
 		if (req.user) {
 			const where = {};
@@ -489,7 +493,7 @@ router.post('/followNotice', async (req, res, next) => {
 	}
 });
 
-router.post('/moblieNotice', async (req, res, next) => {
+router.post('/moblieNotice', isLoggedIn, async (req, res, next) => {
 	try {
 		if (req.user) {
 			const where = {};

@@ -6,6 +6,7 @@ const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
 const { Post, Image, User, Hashtag, Comment, Notice } = require('../../models');
+const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ const upload = multer({
 	limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post('/', upload.none(), async (req, res, next) => {
+router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
 	try {
 		const hashtags = req.body.content.match(/#[^\s#]+/g);
 		const post = await Post.create({
@@ -103,11 +104,11 @@ router.post('/', upload.none(), async (req, res, next) => {
 	}
 });
 
-router.post('/images', upload.array('image'), async (req, res, next) => {
+router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
 	return res.json(req.files.map((v) => v.location));
 });
 
-router.post('/:postId/comment', async (req, res, next) => {
+router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
 	try {
 		const post = await Post.findOne({
 			where: { id: req.params.postId },
@@ -147,7 +148,7 @@ router.post('/:postId/comment', async (req, res, next) => {
 	}
 });
 
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
 	try {
 		await Post.destroy({
 			where: {
@@ -162,7 +163,7 @@ router.delete('/:postId', async (req, res, next) => {
 	}
 });
 
-router.patch('/:postId/like', async (req, res, next) => {
+router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
 	try {
 		const post = await Post.findOne({ where: { id: req.params.postId } });
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
@@ -185,7 +186,7 @@ router.patch('/:postId/like', async (req, res, next) => {
 	}
 });
 
-router.delete('/:postId/like', async (req, res, next) => {
+router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
 	try {
 		const post = await Post.findOne({ where: { id: req.params.postId } });
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
@@ -208,7 +209,7 @@ router.delete('/:postId/like', async (req, res, next) => {
 	}
 });
 
-router.patch('/:postId/save', async (req, res, next) => {
+router.patch('/:postId/save', isLoggedIn, async (req, res, next) => {
 	try {
 		const post = await Post.findOne({ where: { id: req.params.postId } });
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');
@@ -230,7 +231,7 @@ router.patch('/:postId/save', async (req, res, next) => {
 	}
 });
 
-router.delete('/:postId/save', async (req, res, next) => {
+router.delete('/:postId/save', isLoggedIn, async (req, res, next) => {
 	try {
 		const post = await Post.findOne({ where: { id: req.params.postId } });
 		if (!post) return res.status(403).send('게시글이 존재하지 않습니다.');

@@ -2,6 +2,7 @@ const express = require('express');
 const { Op } = require('sequelize');
 
 const { Post, Image, User, Comment } = require('../../models');
+const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
@@ -115,7 +116,7 @@ router.get('/:nickname', async (req, res, next) => {
 	}
 });
 
-router.get('/:nickname/saved', async (req, res, next) => {
+router.get('/:nickname/saved', isLoggedIn, async (req, res, next) => {
 	try {
 		if (req.user?.nickname !== req.params.nickname)
 			return res.status(404).send('접근할 수 없습니다.');
