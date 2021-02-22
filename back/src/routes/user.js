@@ -209,11 +209,13 @@ router.post('/signin', (req, res, next) => {
 
 router.post('/signout', (req, res) => {
 	req.logout();
+	req.session.destroy();
 	if (req.session) {
 		req.session.destroy((e) => {
 			console.error(e);
 		});
 	}
+	res.clearCookie('hangernextjsreact');
 	res.send('logout success');
 });
 
