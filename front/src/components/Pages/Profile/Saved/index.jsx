@@ -20,8 +20,10 @@ const Save = () => {
 	}, [unSavePostDone]);
 
 	useEffect(() => {
-		if (userInfo?.id !== me?.id) {
-			return Router.push('/');
+		if (userInfo) {
+			if (userInfo?.id !== me?.id) {
+				return Router.push('/');
+			}
 		}
 	}, []);
 
