@@ -212,7 +212,6 @@ router.post('/signout', isLoggedIn, (req, res) => {
 	req.logout();
 	req.session.destroy();
 	res.clearCookie('hangernextjsreact');
-	res.redirect('/');
 	res.send('logout success');
 });
 
