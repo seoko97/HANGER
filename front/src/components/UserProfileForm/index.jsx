@@ -219,7 +219,7 @@ const UserProfileForm = ({ children, postType }) => {
 											<UlListWrapper>
 												{/* 나중에 Link 처리 */}
 												<li onClick={openModal} id="followings">
-													팔로우{' '}
+													팔로우&nbsp;
 													<span>
 														{userInfo?.id !== me?.id
 															? userInfo?.Followings
@@ -227,7 +227,7 @@ const UserProfileForm = ({ children, postType }) => {
 													</span>
 												</li>
 												<li onClick={openModal} id="followers">
-													팔로워{' '}
+													팔로워&nbsp;
 													<span>
 														{userInfo?.id !== me?.id
 															? userInfo?.Followers
@@ -235,7 +235,8 @@ const UserProfileForm = ({ children, postType }) => {
 													</span>
 												</li>
 												<li>
-													게시글 <span>{userInfo?.Posts}</span>
+													게시글&nbsp;
+													<span>{userInfo?.Posts}</span>
 												</li>
 											</UlListWrapper>
 
