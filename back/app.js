@@ -57,9 +57,9 @@ app.use(
 		saveUninitialized: false,
 		resave: false,
 		secret: process.env.COOKIE_SECRET,
-		store: new SequelizeStore({
-			db: db.sequelize,
-		}),
+		// store: new SequelizeStore({
+		// 	db: db.sequelize,
+		// }),
 		name: 'hangernextjsreact',
 		proxy: process.env.NODE_ENV === 'production',
 		cookie: {
