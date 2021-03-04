@@ -47,7 +47,7 @@
 
 **기기별 반응형**
 
-<img width="20%" height="239" alt="스크린샷 2021-02-26 오후 8 06 06" src="https://user-images.githubusercontent.com/60173534/109817322-2ba23280-7c75-11eb-85a3-50c294cb2fbe.png"><img width="30%"  height="239"  alt="스크린샷 2021-02-26 오후 8 06 26" src="https://user-images.githubusercontent.com/60173534/109817330-2cd35f80-7c75-11eb-84bf-3017299a369b.png"><img width="50%" height="239" alt="스크린샷 2021-02-26 오후 8 05 53" src="https://user-images.githubusercontent.com/60173534/109817082-d6662100-7c74-11eb-8ddf-24a2431ba810.png">
+<img width="20%"  alt="스크린샷 2021-02-26 오후 8 06 06" src="https://user-images.githubusercontent.com/60173534/109817322-2ba23280-7c75-11eb-85a3-50c294cb2fbe.png"><img width="30%"    alt="스크린샷 2021-02-26 오후 8 06 26" src="https://user-images.githubusercontent.com/60173534/109817330-2cd35f80-7c75-11eb-84bf-3017299a369b.png"><img width="50%"  alt="스크린샷 2021-02-26 오후 8 05 53" src="https://user-images.githubusercontent.com/60173534/109817082-d6662100-7c74-11eb-8ddf-24a2431ba810.png">
 
 ### [Signup Page](#Signup-Page)
 
@@ -62,7 +62,7 @@
 -   로그인 화면
 -   회원가입을 통해 저장된 아이디와 비밀번호를 입력 시 로그인 실행
 
-<img width="1792" alt="스크린샷 2021-02-26 오후 8 14 53" src="https://user-images.githubusercontent.com/60173534/109818666-94d67580-7c76-11eb-886f-5fcbab7231e3.png">
+<img width="100%" alt="스크린샷 2021-02-26 오후 8 14 53" src="https://user-images.githubusercontent.com/60173534/109818666-94d67580-7c76-11eb-886f-5fcbab7231e3.png">
 
 ### [Add Post](#add-post)
 
